@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Netflix",
+    "companyOwner": "Greg Peters",
+    "dateCreated": "4/14/2024"
+  },
+  {
+    "name": "Hulu",
+    "companyOwner": "Joe Earley",
+    "dateCreated": "4/10/2024"
+  },
+  {
+    "name": "ESPN",
+    "companyOwner": "Scott Rasmussen",
+    "dateCreated": "4/8/2024"
+  },
+  {
+    "name": "HBO",
+    "companyOwner": "David Zaslav",
+    "dateCreated": "4/4/2024"
+  }
+]
