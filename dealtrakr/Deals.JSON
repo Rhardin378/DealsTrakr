@@ -1,0 +1,23 @@
+[
+  {
+    "_id": "01",
+    "name": "Consulting Service",
+    "stage": "initiated",
+    "amount": "35,000",
+    "company": "Netflix"
+  },
+  {
+    "_id": "02",
+    "name": "Supply iPhone Glass",
+    "stage": "contract sent",
+    "amount": "24,000,000",
+    "company": "ESPN"
+  },
+  {
+    "_id": "03",
+    "name": "Get the Office Back",
+    "stage": "closed won",
+    "amount": "30,000,000",
+    "company": "HBO"
+  }
+]
