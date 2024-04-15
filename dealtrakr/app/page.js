@@ -10,12 +10,12 @@ export default function Home() {
   return (
     <main>
 			<div>
-        {allCompanies.map((c) => (
-					<div key={c.name}>	
-            <p>{c.name}</p>
-          </div>
-						))}
-        	</div>
+      {allCompanies.map((c) => (
+				<div key={c.name}>	
+          <p>{c.name}</p>
+        </div>
+				))}
+        </div>
         <AddCompanyButton />
 		</main>
   );

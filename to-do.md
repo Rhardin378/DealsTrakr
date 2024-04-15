@@ -7,4 +7,4 @@
 - Add company details view
 
 -Scott
--add company button/add company form
+-style addcompany form
