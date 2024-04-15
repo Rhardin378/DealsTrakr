@@ -1,11 +1,15 @@
+'use client'
+import { useState } from "react";
+import { companiesAPI } from "./data/companiesAPI";
 
 
 export default function Home() {
+  const [allCompanies, _] = useState(companiesAPI.getAll());
+
   return (
     <main>
-      <div>
-        <h1>DealsTrakr</h1>
-      </div>
-    </main>
+			<div>
+			</div>
+		</main>
   );
 }
