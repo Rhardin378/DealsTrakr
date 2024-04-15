@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react";
 import { companiesAPI } from "./data/companiesAPI";
+import AddCompanyButton from "./components/AddCompanyButton";
 
 
 export default function Home() {
@@ -9,7 +10,13 @@ export default function Home() {
   return (
     <main>
 			<div>
-			</div>
+        {allCompanies.map((c) => (
+					<div key={c.name}>	
+            <p>{c.name}</p>
+          </div>
+						))}
+        	</div>
+        <AddCompanyButton />
 		</main>
   );
 }
