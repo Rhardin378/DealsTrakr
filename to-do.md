@@ -5,3 +5,6 @@
 - Add company form
 - Add companies list view
 - Add company details view
+
+-Scott
+-add company button/add company form
