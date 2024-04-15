@@ -5,6 +5,3 @@
 - Add company form
 - Add companies list view
 - Add company details view
-
--Scott
--style addcompany form
