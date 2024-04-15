@@ -34,7 +34,7 @@ const AddCompany = () => {
   };
 
   return (
-    <div>
+    <div className="add-company-form-container">
     <form onSubmit={handleAddCompanySubmit}>
       <label>
         Name:

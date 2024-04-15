@@ -6,7 +6,7 @@ import AddCompanyButton from "../components/AddCompanyButton";
 const AddCompanyForm = () => {
   return (
     <div>
-      <h1>Add a New Company</h1>
+      <h2>Add a New Company</h2>
       <AddCompany />
     </div>
   );
