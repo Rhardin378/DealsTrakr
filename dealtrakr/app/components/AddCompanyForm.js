@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from "next/link";
 import { companiesAPI } from "../data/companiesAPI";
 
-
 const AddCompany = () => {
   const [id, setId] = useState('');
   const [name, setName] = useState('');
