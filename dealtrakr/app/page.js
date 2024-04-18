@@ -1,22 +1,10 @@
-'use client'
+"use client";
 import { useState } from "react";
 import { companiesAPI } from "./data/companiesAPI";
 import AddCompanyButton from "./components/AddCompanyButton";
 
-
 export default function Home() {
   const [allCompanies, _] = useState(companiesAPI.getAll());
 
-  return (
-    <main>
-			<div>
-      {allCompanies.map((c) => (
-				<div key={c.name}>	
-          <p>{c.name}</p>
-        </div>
-				))}
-        </div>
-        <AddCompanyButton />
-		</main>
-  );
+  return <main></main>;
 }
