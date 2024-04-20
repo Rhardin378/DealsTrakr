@@ -92,4 +92,22 @@ router.post("/deals", async (req, res, next) => {
   }
 });
 
+/**
+ * GET users route
+ */
+router.get("/users", async (req, res, next) => {
+  try {
+    // fetch companies data from mongoDB
+    const users = await User.find();
+
+    // message if no companies available
+    if (!users) {
+     return res.status(404).json({ message: "No users yet!" })
+    }
+    res.json(users);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
