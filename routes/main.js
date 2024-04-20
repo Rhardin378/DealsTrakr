@@ -110,4 +110,28 @@ router.get("/users", async (req, res, next) => {
   }
 });
 
+/**
+ * POST users route
+ */
+router.post("/users", async (req, res, next) => {
+  try {
+    const {email, password, username} = req.body;
+
+    // create new Company instance
+    const newUser = new User({
+      email,
+      password,
+      username
+    });
+
+    // save the new company to mongoDB
+    await newUser.save();
+
+    res.status(200).json(newUser);
+    res.end();
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
