@@ -5,7 +5,7 @@ import AddCompanyButton from "./components/AddCompanyButton";
 import CompaniesListView from "./components/CompaniesListView";
 import Link from "next/link";
 export default function Home() {
-  const [allCompanies, _] = useState(companiesAPI.getAll());
+  const [allCompanies, setAllCompanies] = useState([]);
 
   return (
     <main>
