@@ -1,14 +1,28 @@
+import { useDispatch, useSelector } from "react-redux";
+import companies from "../store/slices/companies";
+import { fetchCompanies } from "../store/slices/companies";
+import { useEffect, React } from "react";
 import { useState } from "react";
 import { companiesAPI } from "../data/companiesAPI";
 import Link from "next/link";
 import CompanySearch from "./CompanySearch";
+import axios from "axios";
 //searchbar
 // table
 //pagination component
 
 const CompaniesListView = () => {
-  const [allCompanies, _] = useState(companiesAPI.getAll());
-
+  console.log(
+    axios
+      .get("http://localhost:8000/companies")
+      .then((companies) => console.log(companies.data))
+  );
+  // const [allCompanies, _] = useState(companiesAPI.getAll());
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchCompanies());
+  }, [dispatch]);
+  const allCompanies = useSelector((state) => state.companies.companiesToShow);
   const renderCompanies = allCompanies.map((company) => {
     return (
       <tr scope="row">

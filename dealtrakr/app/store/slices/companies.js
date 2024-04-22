@@ -3,10 +3,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const axios = require("axios");
 // our asyncThunk to create an api call to our /companies endpoint
 export const fetchCompanies = createAsyncThunk(
-  "products/fetchCompanies",
+  "companies/fetchCompanies",
   async () => {
     let response;
-    response = axios.get("http://localhost:8000/companies");
+    response = await axios.get("http://localhost:8000/companies");
 
     return response.data;
   }
