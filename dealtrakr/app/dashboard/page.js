@@ -15,6 +15,7 @@ export default function Dashboard() {
         <Link href="/companies">Companies</Link>
         <Link href="/deals">Deals</Link>
         <Link href="/dashboard">Dashboard</Link>
+        <Link href="/addcompany">Add New Company</Link>
       </div>
       <h1>Companies</h1>
       <CompaniesListView />
