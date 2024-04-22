@@ -5,7 +5,7 @@ const Navbar = () => {
     <nav>
       <ul>
         <li>DealsTrakr</li>
-        <Link href="#">
+        <Link href="/">
           <li>Sign In</li>
         </Link>
       </ul>

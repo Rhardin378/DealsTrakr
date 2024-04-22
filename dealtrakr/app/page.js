@@ -1,11 +1,9 @@
 "use client";
 import { useState } from "react";
-import { companiesAPI } from "./data/companiesAPI";
-import AddCompanyButton from "./components/AddCompanyButton";
 import CompaniesListView from "./components/CompaniesListView";
 import Link from "next/link";
+import Login from "./components/Login";
 export default function Home() {
-  const [allCompanies, setAllCompanies] = useState([]);
 
   return (
     <main>
@@ -15,8 +13,10 @@ export default function Home() {
         <Link href="#">Deals</Link>
         <Link href="#">Dashboard</Link>
       </div>
-      <h1>Companies</h1>
-      <CompaniesListView />
+      <br />
+      <p>Username: HBO_Admin</p>
+      <p>Password: hbomax</p>
+      <Login />
     </main>
   );
 }
