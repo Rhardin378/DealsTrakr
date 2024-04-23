@@ -1,11 +1,12 @@
+'use client'
 import React, { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -17,8 +18,8 @@ const Login = () => {
 
   const handleSignIn = () => {
     if (username === "HBO_Admin" && password === "hbomax") {
-      // If username and password match, set loggedIn to true
-      setLoggedIn(true);
+      // If username and password match, navigate to dashboard
+      router.push("/dashboard");
     } else {
       setError("Invalid username or password");
     }
@@ -43,11 +44,6 @@ const Login = () => {
         />
       </div>
       <button onClick={handleSignIn}>Sign In</button>
-      {loggedIn && (
-        <Link href="/dashboard">
-          <button>Go to Dashboard</button>
-        </Link>
-      )}
       {error && <div>{error}</div>}
     </div>
   );
