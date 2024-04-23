@@ -12,9 +12,10 @@ export default function Dashboard() {
     <main>
       {/* links components */}
       <div>
-        <Link href="#">Companies</Link>
-        <Link href="#">Deals</Link>
-        <Link href="#">Dashboard</Link>
+        <Link href="/companies">Companies</Link>
+        <Link href="/deals">Deals</Link>
+        <Link href="/dashboard">Dashboard</Link>
+        <Link href="/addcompany">Add New Company</Link>
       </div>
       <h1>Companies</h1>
       <CompaniesListView />

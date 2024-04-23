@@ -5,6 +5,7 @@ import "../app/styles.css";
 import Navbar from "./components/NavBar";
 import { Provider } from "react-redux";
 import store from "./store/configureStore";
+import Router from "next/router";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
