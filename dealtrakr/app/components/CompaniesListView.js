@@ -12,11 +12,6 @@ import axios from "axios";
 //pagination component
 
 const CompaniesListView = () => {
-  console.log(
-    axios
-      .get("http://localhost:8000/companies")
-      .then((companies) => console.log(companies.data))
-  );
   // const [allCompanies, _] = useState(companiesAPI.getAll());
   const dispatch = useDispatch();
   useEffect(() => {
