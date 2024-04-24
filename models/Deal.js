@@ -4,8 +4,12 @@ const Schema = mongoose.Schema;
 const DealSchema = new Schema({
   name: {type: String, required: true},
   amount: {type: String, required: true},
-  closeDate: {type: String, required: true},
-  companies: [{ type: Schema.Types.ObjectId, ref: "Company" }]
+  dateInitiated: {type: Date, required: true},
+  dateClosed: {type: Date, required: true},
+  stage: {type: String, 
+          enum: ["initiated", "qualified", "contract sent", "closed won", "closed lost"], 
+          required: true},
+  company: { type: Schema.Types.ObjectId, ref: "Company" }
 });
 
 const Deal = mongoose.model("Deal", DealSchema);

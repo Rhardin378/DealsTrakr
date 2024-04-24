@@ -3,6 +3,8 @@ import { useRouter } from "next/navigation";
 import { useState } from 'react';
 import Link from "next/link";
 import { companiesAPI } from "../data/companiesAPI";
+import { useDispatch } from "react-redux";
+
 
 const AddCompany = () => {
   const [id, setId] = useState('');
@@ -14,6 +16,8 @@ const AddCompany = () => {
   const [dateCreated, setDateCreated] = useState('');
   const [imageURL, setImageURL] = useState('');
   const router = useRouter();
+  const dispatch = useDispatch();
+
 
   const handleAddCompanySubmit = (e) => {
     e.preventDefault();
