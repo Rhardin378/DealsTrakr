@@ -1,6 +1,7 @@
 "use client";
 import { Inter } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.css";
+
 import "../app/styles.css";
 import Navbar from "./components/NavBar";
 import { Provider } from "react-redux";

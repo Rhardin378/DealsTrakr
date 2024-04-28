@@ -47,7 +47,9 @@ const CompaniesListView = () => {
   });
 
   return (
-    <div className="container">
+    <div className="container companiesForm">
+      <Link href="/addcompany">Add New Company</Link>
+
       <CompanySearch />
       <table className="table table-dark table-striped">
         <thead>
