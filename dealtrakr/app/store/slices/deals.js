@@ -27,7 +27,7 @@ export const dealsSlice = createSlice({
       })
       .addCase(fetchDeals.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.companiesToShow = action.payload;
+        state.dealsToShow = action.payload;
         // state.count = action.payload.count;
       })
       .addCase(fetchDeals.rejected, (state, action) => {
