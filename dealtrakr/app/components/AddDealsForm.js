@@ -2,9 +2,8 @@
 import { useRouter } from "next/navigation";
 import { useState } from 'react';
 import Link from "next/link";
-import { addCompany } from "../store/slices/addCompanySlice";
+import { companiesAPI } from "../data/companiesAPI";
 import { useDispatch } from "react-redux";
-import deals from "../store/slices/deals";
 
 
 const AddCompany = () => {
@@ -14,7 +13,6 @@ const AddCompany = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [country, setCountry] = useState('');
   const [dateCreated, setDateCreated] = useState('');
   const [imageURL, setImageURL] = useState('');
   const router = useRouter();
@@ -23,22 +21,19 @@ const AddCompany = () => {
 
   const handleAddCompanySubmit = (e) => {
     e.preventDefault();
-    dispatch(addCompany({ // Dispatch the addCompany action with the company data
-      id,
-      name,
-      companyOwner,
-      phoneNumber,
-      city,
-      state,
-      country,
-      dateCreated,
-      imageURL,
-      deals: []
-    })).then(() => {
-      router.push("/dashboard");
-    }).catch(error => {
-      console.error("Could not add your company:", error)
-    });
+    const newCompany = {
+      id: id,
+      name: name,
+      companyOwner: companyOwner,
+      phoneNumber: phoneNumber,
+      city: city,
+      state: state,
+      dateCreated: dateCreated,
+      imageURL: imageURL,
+      deals: [],
+    };
+    companiesAPI.companies.push(newCompany);
+    router.push("/"); 
   };
 
   return (
@@ -63,11 +58,7 @@ const AddCompany = () => {
       <label>
         State:
         <input type="text" value={state} onChange={(e) => setState(e.target.value)} />
-      </label>
-      <label>
-        Country:
-        <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} />
-      </label>         
+      </label>      
       <label>
         Date Created:
         <input type="text" value={dateCreated} onChange={(e) => setDateCreated(e.target.value)} />
