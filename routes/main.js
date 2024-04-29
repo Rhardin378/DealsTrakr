@@ -112,6 +112,25 @@ router.post("/deals", async (req, res, next) => {
 });
 
 /**
+ * DELETE deal by ID route
+ */
+router.delete("/companies/:dealId", async (req, res, next) => {
+  const dealId = req.params.dealId;
+
+  try {
+    const deal = await Deal.findByIdAndDelete(dealId);
+
+    if (!deal) {
+      return res.status(404).json({ message: "Company not found" });
+    }
+
+    res.status(200).json({ message: "Company successfully deleted" });
+  } catch (err) {
+    next(err);
+  }
+});
+
+/**
  * GET users route
  */
 router.get("/users", async (req, res, next) => {
