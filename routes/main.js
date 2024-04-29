@@ -51,6 +51,25 @@ router.post("/companies", async (req, res, next) => {
 });
 
 /**
+ * DELETE company by ID route
+ */
+router.delete("/companies/:companyId", async (req, res, next) => {
+  const companyId = req.params.companyId;
+
+  try {
+    const company = await Company.findByIdAndDelete(companyId);
+
+    if (!company) {
+      return res.status(404).json({ message: "Company not found" });
+    }
+
+    res.status(200).json({ message: "Company successfully deleted" });
+  } catch (err) {
+    next(err);
+  }
+});
+
+/**
  * GET deals route
  */
 router.get("/deals", async (req, res, next) => {
