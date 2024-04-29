@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from "next/link";
 import { addCompany } from "../store/slices/addCompanySlice";
 import { useDispatch } from "react-redux";
-import deals from "../store/slices/deals";
+
 
 
 const AddCompany = () => {

@@ -2,72 +2,61 @@
 import { useRouter } from "next/navigation";
 import { useState } from 'react';
 import Link from "next/link";
-import { companiesAPI } from "../data/companiesAPI";
+import { addDeal } from "../store/slices/addDealSlice";
 import { useDispatch } from "react-redux";
 
 
-const AddCompany = () => {
+const AddDeal = () => {
   const [id, setId] = useState('');
   const [name, setName] = useState('');
-  const [companyOwner, setCompanyOwner] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [dateCreated, setDateCreated] = useState('');
-  const [imageURL, setImageURL] = useState('');
+  const [amount, setAmount] = useState('');
+  const [dateClosed, setDateClosed] = useState('');
+  const [dateInitiated, setDateInitiated] = useState('');
+  const [stage, setStage] = useState('');
   const router = useRouter();
   const dispatch = useDispatch();
 
 
-  const handleAddCompanySubmit = (e) => {
+  const handleAddDealSubmit = (e) => {
     e.preventDefault();
-    const newCompany = {
-      id: id,
-      name: name,
-      companyOwner: companyOwner,
-      phoneNumber: phoneNumber,
-      city: city,
-      state: state,
-      dateCreated: dateCreated,
-      imageURL: imageURL,
-      deals: [],
-    };
-    companiesAPI.companies.push(newCompany);
-    router.push("/"); 
+    dispatch(addDeal({ // Dispatch the addDeal action with the deal data
+      id,
+      name,
+      amount,
+      dateClosed,
+      dateInitiated,
+      stage
+    })).then(() => {
+      router.push("/dashboard");
+    }).catch(error => {
+      console.error("Could not add your deal:", error)
+    });
   };
 
   return (
     <div className="add-company-form-container">
-    <form onSubmit={handleAddCompanySubmit}>
+    <form onSubmit={handleAddDealSubmit}>
       <label>
         Name:
         <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
       </label>
       <label>
-        Company Owner:
-        <input type="text" value={companyOwner} onChange={(e) => setCompanyOwner(e.target.value)} />
+        Deal Amount:
+        <input type="text" value={amount} onChange={(e) => setAmount(e.target.value)} />
       </label>
       <label>
-        Phone Number:
-        <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+        Date Initiated:
+        <input type="text" value={dateInitiated} onChange={(e) => setDateInitiated(e.target.value)} />
       </label>
       <label>
-        City:
-        <input type="text" value={city} onChange={(e) => setCity(e.target.value)} />
+        Date Closed:
+        <input type="text" value={dateClosed} onChange={(e) => setDateClosed(e.target.value)} />
       </label>
       <label>
-        State:
-        <input type="text" value={state} onChange={(e) => setState(e.target.value)} />
-      </label>      
-      <label>
-        Date Created:
-        <input type="text" value={dateCreated} onChange={(e) => setDateCreated(e.target.value)} />
+        Stage:
+        <input type="text" value={stage} onChange={(e) => setStage(e.target.value)} />
       </label>
-      <label>
-        Company Image URL:
-        <input type="text" value={imageURL} onChange={(e) => setImageURL(e.target.value)} />
-      </label>
-      <button type="submit" className="add-company-button">Add Company</button>
+      <button type="submit" className="add-company-button">Add Deal</button>
       <Link href="/dashboard">
         <button className="add-company-button">Back</button>
       </Link>
@@ -76,4 +65,4 @@ const AddCompany = () => {
   );
 };
 
-export default AddCompany;
+export default AddDeal;

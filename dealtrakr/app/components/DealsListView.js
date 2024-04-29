@@ -27,7 +27,7 @@ const DealsListView = () => {
           <span>{deal.amount}</span>
         </td>
         <td scope="col">
-          <span>{deal.closeDate}</span>
+          <span>{deal.dateClosed}</span>
         </td>
       </tr>
     );
