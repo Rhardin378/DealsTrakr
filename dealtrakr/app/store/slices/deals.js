@@ -1,16 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const axios = require("axios");
-// our asyncThunk to create an api call to our /companies endpoint
-export const fetchDeals = createAsyncThunk(
-  "companies/fetchDeals",
-  async () => {
-    let response;
-    response = await axios.get("http://localhost:8000/deals");
-
+/**
+ * Async thunk to fetch all deals from the database
+ */
+export const fetchDeals = createAsyncThunk('deals/fetchDeals', async () => {
+  try {
+    // Makes a GET request to the server
+    const response = await axios.get(`http://localhost:8000/deals`, {
+    });
     return response.data;
+  } catch (error) {
+    throw error;
   }
-);
+});
 export const dealsSlice = createSlice({
   name: "deals",
   initialState: {

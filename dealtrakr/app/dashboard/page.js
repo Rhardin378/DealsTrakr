@@ -1,12 +1,12 @@
 "use client";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-
 import { useState } from "react";
 import { companiesAPI } from "../data/companiesAPI";
 import AddCompanyButton from "../components/AddCompanyButton";
 import CompaniesListView from "../components/CompaniesListView";
 import Link from "next/link";
+import DealsListView from "../components/DealsListView";
 
 export default function Dashboard() {
   const [allCompanies, _] = useState(companiesAPI.getAll());
@@ -30,7 +30,7 @@ export default function Dashboard() {
           <CompaniesListView />{" "}
         </Tab>
         <Tab eventKey="deals" title="Deals">
-          Tab content for Deals
+          <DealsListView />{" "}
         </Tab>
         <Tab eventKey="dashboard" title="Dashboard">
           Tab content for Dashboard

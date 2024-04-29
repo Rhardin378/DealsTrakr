@@ -1,10 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDeals } from "../store/slices/deals";
 import { useEffect, React } from "react";
-import { useState } from "react";
 import Link from "next/link";
 import DealSearch from "./DealSearch";
-import axios from "axios";
+import { fetchDeals } from "../store/slices/deals";
 //searchbar
 // table
 //pagination component
@@ -29,15 +27,8 @@ const DealsListView = () => {
           <span>{deal.amount}</span>
         </td>
         <td scope="col">
-          <span>{deal.dateInitiated}</span>
+          <span>{deal.closeDate}</span>
         </td>
-        <td scope="col">
-          <span>{deal.dateClosed}</span>
-        </td>
-        <td scope="col">
-          <span>{deal.stage}</span>
-        </td>
-        <td>{deal.company}</td>
       </tr>
     );
   });
@@ -52,10 +43,7 @@ const DealsListView = () => {
           <tr>
             <th>Deal Name</th>
             <th>Deal Amount</th>
-            <th>Date Initiated</th>
-            <th>Date Closed</th>
-            <th>Deal Stage</th>
-            <th>Company</th>
+            <th>Close Date</th>
           </tr>
         </thead>
         <tbody>{renderDeals}</tbody>
