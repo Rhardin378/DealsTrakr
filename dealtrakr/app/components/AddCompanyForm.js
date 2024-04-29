@@ -68,7 +68,7 @@ const AddCompany = () => {
         <input type="text" value={imageURL} onChange={(e) => setImageURL(e.target.value)} />
       </label>
       <button type="submit" className="add-company-button">Add Company</button>
-      <Link href="/">
+      <Link href="/dashboard">
         <button className="add-company-button">Back</button>
       </Link>
     </form>
