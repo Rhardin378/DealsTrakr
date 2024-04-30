@@ -60,9 +60,45 @@ img {
   border-radius: 40px;
   margin-right: 10px;
 }
+
+.nav-tabs .nav-link.active {
+  background-color: rgba(
+    204,
+    85,
+    0,
+    1
+  ); /* Change this to your desired color for the active tab */
+  color: #fff; /* Change this to your desired text color for the active tab */
+  border-color: black; /* Change this to your desired border color for the active tab */
+}
+
+.form-control {
+  height: 100%;
+}
+table {
+  margin-top: 10px;
+}
+
+.companiesView {
+  background-color: rgba(200, 200, 200, 1);
+}
 .companiesForm {
-  /* background-color: rgba(200, 200, 200, 1); */
+  background-color: rgba(200, 200, 200, 1);
   padding: 50px;
+  padding-top: 100px;
+}
+.tabsClass {
+  background-color: rgba(200, 200, 200, 1);
+}
+.formActions {
+  display: flex;
+  justify-content: space-between;
+}
+.add-company-button,
+.addCompanyBtn {
+  padding: 10px;
+  font-weight: bold;
+  background-color: rgba(204, 85, 0, 1);
 }
 
 /* deals */
@@ -78,9 +114,10 @@ img {
 }
 
 .navbar-brand {
-  font-size: 30px;
+  font-size: 40px;
   font-weight: bold;
   padding-left: 30px;
+  text-decoration: none;
 }
 
 .nav-link,

@@ -48,10 +48,13 @@ const CompaniesListView = () => {
 
   return (
     <div className="container companiesForm">
-      <Link href="/companies/new">Add New Company</Link>
-
-      <CompanySearch />
-      <table className="table table-dark table-striped">
+      <div className="formActions">
+        <CompanySearch />
+        <Link href="/companies/new">
+          <button className="addCompanyBtn">Add New Company</button>
+        </Link>
+      </div>
+      <table className="table table-light table-striped">
         <thead>
           <tr>
             <th>Company Name</th>
