@@ -19,7 +19,7 @@ const initialState = {
 };
 
 // Create the addCompany slice
-const addCompanySlice = createSlice({
+const companyDetailsSlice = createSlice({
   name: 'addCompany',
   initialState,
   reducers: {},
@@ -39,4 +39,4 @@ const addCompanySlice = createSlice({
 });
 
 // Export the slice and its actions
-export default addCompanySlice.reducer;
+export default companyDetailsSlice.reducer;

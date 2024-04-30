@@ -25,7 +25,7 @@ const CompaniesListView = () => {
           <div>
             <img src={company.imageURL} placeholder={company.name} />
             <span>
-              <Link href="#">{company.name}</Link>
+              <Link href={`/companies/${company._id}`}>{company.name}</Link>
             </span>
           </div>
         </td>

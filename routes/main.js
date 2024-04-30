@@ -21,6 +21,23 @@ router.get("/companies", async (req, res, next) => {
   }
 });
 
+router.get("/companies/:companyId", async (req, res, next) => {
+  //fetch company 
+  const companyId = req.params.companyId;
+
+  try {
+    const company = await Company.findById(companyId);
+
+    if (!company) {
+      return res.status(404).json({ message: "Company not found" });
+    }
+
+    res.json(company);
+  } catch (err) {
+    next(err);
+  }
+});
+
 /**
  * POST companies route
  */
@@ -92,13 +109,16 @@ router.get("/deals", async (req, res, next) => {
  */
 router.post("/deals", async (req, res, next) => {
   try {
-    const {name, amount, closeDate} = req.body;
+    const {name, amount, dateClosed, dateInitiated, stage, company} = req.body;
 
     // create new Company instance
     const newDeal = new Deal({
       name,
       amount,
-      closeDate
+      dateClosed,
+      dateInitiated,
+      stage,
+      company
     });
 
     // save the new company to mongoDB
@@ -114,7 +134,7 @@ router.post("/deals", async (req, res, next) => {
 /**
  * DELETE deal by ID route
  */
-router.delete("/companies/:dealId", async (req, res, next) => {
+router.delete("/deals/:dealId", async (req, res, next) => {
   const dealId = req.params.dealId;
 
   try {

@@ -8,7 +8,7 @@ const CompanySchema = new Schema({
   city: {type: String, required: true},
   state: {type: String, required: true},
   country: {type: String, required: true},
-  dateCreated: {type: String, required: true},
+  dateCreated: {type: Date, required: true},
   imageURL: {type: String, required: true},
   deals: [{ type: Schema.Types.ObjectId, ref: "Deal" }]
 })
