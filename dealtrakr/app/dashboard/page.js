@@ -13,26 +13,14 @@ export default function Dashboard() {
 
   return (
     <main>
-      {/* links components */}
-      <div>
-        {/* <Link href="/companies">Companies</Link>
-        <Link href="/deals">Deals</Link>
-        <Link href="/dashboard">Dashboard</Link> */}
-        {/* <Link href="/addcompany">Add New Company</Link> */}
-      </div>
-
-      <Tabs
-        defaultActiveKey="companies"
-        id="uncontrolled-tab-example"
-        className="mb-3"
-      >
-        <Tab eventKey="companies" title="Companies">
-          <CompaniesListView />{" "}
+      <Tabs defaultActiveKey="companies" id="tab-example" className=" ms-3">
+        <Tab eventKey="companies" title="Companies" className="tabsClass">
+          <CompaniesListView />
         </Tab>
-        <Tab eventKey="deals" title="Deals">
+        <Tab eventKey="deals" title="Deals" className="tabsClass">
           Tab content for Deals
         </Tab>
-        <Tab eventKey="dashboard" title="Dashboard">
+        <Tab eventKey="dashboard" title="Dashboard" className="tabsClass">
           Tab content for Dashboard
         </Tab>
       </Tabs>
