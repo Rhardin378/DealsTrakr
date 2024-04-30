@@ -70,7 +70,7 @@ const AddCompany = () => {
       </label>         
       <label>
         Date Created:
-        <input type="text" value={dateCreated} onChange={(e) => setDateCreated(e.target.value)} />
+        <input type="date" value={dateCreated} onChange={(e) => setDateCreated(e.target.value)} />
       </label>
       <label>
         Company Image URL:
