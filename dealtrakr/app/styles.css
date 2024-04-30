@@ -101,6 +101,12 @@ table {
   background-color: rgba(204, 85, 0, 1);
 }
 
+/* deals */
+.dealsForm {
+  /* background-color: rgba(200, 200, 200, 1); */
+  padding: 50px;
+}
+
 /* navbar */
 .navbar {
   background-color: rgba(204, 85, 0, 1);

@@ -50,7 +50,7 @@ const CompaniesListView = () => {
     <div className="container companiesForm">
       <div className="formActions">
         <CompanySearch />
-        <Link href="/addcompany">
+        <Link href="/companies/new">
           <button className="addCompanyBtn">Add New Company</button>
         </Link>
       </div>

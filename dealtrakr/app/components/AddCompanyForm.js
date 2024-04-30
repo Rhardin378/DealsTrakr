@@ -2,8 +2,9 @@
 import { useRouter } from "next/navigation";
 import { useState } from 'react';
 import Link from "next/link";
-import { companiesAPI } from "../data/companiesAPI";
+import { addCompany } from "../store/slices/addCompanySlice";
 import { useDispatch } from "react-redux";
+
 
 
 const AddCompany = () => {
@@ -13,6 +14,7 @@ const AddCompany = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
+  const [country, setCountry] = useState('');
   const [dateCreated, setDateCreated] = useState('');
   const [imageURL, setImageURL] = useState('');
   const router = useRouter();
@@ -21,19 +23,22 @@ const AddCompany = () => {
 
   const handleAddCompanySubmit = (e) => {
     e.preventDefault();
-    const newCompany = {
-      id: id,
-      name: name,
-      companyOwner: companyOwner,
-      phoneNumber: phoneNumber,
-      city: city,
-      state: state,
-      dateCreated: dateCreated,
-      imageURL: imageURL,
-      deals: [],
-    };
-    companiesAPI.companies.push(newCompany);
-    router.push("/"); 
+    dispatch(addCompany({ // Dispatch the addCompany action with the company data
+      id,
+      name,
+      companyOwner,
+      phoneNumber,
+      city,
+      state,
+      country,
+      dateCreated,
+      imageURL,
+      deals: []
+    })).then(() => {
+      router.push("/dashboard");
+    }).catch(error => {
+      console.error("Could not add your company:", error)
+    });
   };
 
   return (
@@ -58,7 +63,11 @@ const AddCompany = () => {
       <label>
         State:
         <input type="text" value={state} onChange={(e) => setState(e.target.value)} />
-      </label>      
+      </label>
+      <label>
+        Country:
+        <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} />
+      </label>         
       <label>
         Date Created:
         <input type="text" value={dateCreated} onChange={(e) => setDateCreated(e.target.value)} />
@@ -68,7 +77,7 @@ const AddCompany = () => {
         <input type="text" value={imageURL} onChange={(e) => setImageURL(e.target.value)} />
       </label>
       <button type="submit" className="add-company-button">Add Company</button>
-      <Link href="/">
+      <Link href="/dashboard">
         <button className="add-company-button">Back</button>
       </Link>
     </form>

@@ -1,7 +1,6 @@
 'use client'
 import React from "react";
-import AddCompany from "../components/AddCompanyForm";
-import AddCompanyButton from "../components/AddCompanyButton";
+import AddCompany from "../../components/AddCompanyForm";
 
 const AddCompanyForm = () => {
   return (
