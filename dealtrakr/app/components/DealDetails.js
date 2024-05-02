@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDealDetails } from "../store/slices/dealDetailsSlice";
+import DeleteDealButton from "./DeleteDealButton";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 
@@ -32,6 +33,8 @@ const dealDetails = () => {
       <p><strong>Date Initiated:</strong> {dealDetails.dateInitiated}</p>
       <p><strong>Date Closed:</strong> {dealDetails.dateClosed}</p>
       <p><strong>Stage:</strong> {dealDetails.stage}</p>
+      <DeleteDealButton dealId={dealDetails._id}/>
+      <br/>
       <Link href="/dashboard">
         <button className="back-button">Back to Dashboard</button>
       </Link>
