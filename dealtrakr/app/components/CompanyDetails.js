@@ -26,15 +26,22 @@ const CompanyDetails = () => {
 
   return (
     <div className="company-details">
-      <p>Name: {companyDetails.name}</p>
-      <p>Company Owner: {companyDetails.companyOwner}</p>
-      <p>Date Created: {companyDetails.dateCreated}</p>
-      <p>Phone Number: {companyDetails.phoneNumber}</p>
-      <p>City: {companyDetails.city}</p>
-      <p>State: {companyDetails.state}</p>
+      <div>
+      <br/>
+      <img className="company-details-img" src={companyDetails.imageURL}></img>
+      </div>
+      <br/>
+      <p><strong>Company Owner:</strong> {companyDetails.companyOwner}</p>
+      <p><strong>Date Created:</strong> {companyDetails.dateCreated}</p>
+      <p><strong>Phone Number:</strong> {companyDetails.phoneNumber}</p>
+      <p><strong>City:</strong> {companyDetails.city}</p>
+      <p><strong>State:</strong> {companyDetails.state}</p>
       <Link href="/dashboard">
-        <button>Back</button>
+        <button className="back-button">Back to Dashboard</button>
       </Link>
+      <br/>
+      <br/>
+      <br/>
     </div>
   );
 };

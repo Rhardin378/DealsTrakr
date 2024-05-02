@@ -5,7 +5,6 @@ import CompanyDetails from "../../components/CompanyDetails";
 const CompanyDetailsPage = () => {
   return (
     <div>
-      <h1>Company Details</h1>
       <CompanyDetails />
     </div>
   );

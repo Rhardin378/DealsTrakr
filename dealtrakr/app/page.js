@@ -14,8 +14,6 @@ export default function Home() {
         <Link href="#">Dashboard</Link>
       </div>
       <br />
-      <p>Username: HBO_Admin</p>
-      <p>Password: hbomax</p>
       <Login />
     </main>
   );
