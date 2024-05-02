@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCompanyDetails } from "../store/slices/companyDetailsSlice";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import DeleteCompanyButton from "./DeleteCompanyButton";
 
 const CompanyDetails = () => {
   const { id } = useParams();
@@ -35,7 +36,8 @@ const CompanyDetails = () => {
       <p><strong>Date Created:</strong> {companyDetails.dateCreated}</p>
       <p><strong>Phone Number:</strong> {companyDetails.phoneNumber}</p>
       <p><strong>City:</strong> {companyDetails.city}</p>
-      <p><strong>State:</strong> {companyDetails.state}</p>
+      <DeleteCompanyButton companyId={companyDetails._id}/>
+      <br/>
       <Link href="/dashboard">
         <button className="back-button">Back to Dashboard</button>
       </Link>
