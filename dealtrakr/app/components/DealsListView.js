@@ -19,7 +19,7 @@ const DealsListView = () => {
         <td scope="col">
           <div>
           <span>
-            <Link href="#">{deal.name}</Link>
+            <Link href={`/deals/${deal._id}`}>{deal.name}</Link>
           </span>
           </div>
         </td>
