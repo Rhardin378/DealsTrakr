@@ -82,6 +82,14 @@ table {
 .companiesView {
   background-color: rgba(200, 200, 200, 1);
 }
+.company-details {
+  background-color: rgba(200, 200, 200, 1);
+  text-align: center;
+}
+
+.company-details-img {
+  margin-top: 10px;
+}
 .companiesForm {
   background-color: rgba(200, 200, 200, 1);
   padding: 50px;
@@ -101,10 +109,29 @@ table {
   background-color: rgba(204, 85, 0, 1);
 }
 
+.back-button {
+  padding: 5px;
+  font-weight: bold;
+  background-color: rgba(204, 85, 0, 1);
+  margin-top: 5px;
+}
+
+.delete-button {
+  padding: 5px;
+  font-weight: bold;
+  background-color: rgba(204, 85, 0, 1);
+  margin-top: 5px;
+}
+
 /* deals */
 .dealsForm {
   /* background-color: rgba(200, 200, 200, 1); */
   padding: 50px;
+}
+
+.deal-details {
+  background-color: rgba(200, 200, 200, 1);
+  text-align: center;
 }
 
 /* navbar */

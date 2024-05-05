@@ -104,6 +104,23 @@ router.get("/deals", async (req, res, next) => {
   }
 });
 
+router.get("/deals/:dealId", async (req, res, next) => {
+  //fetch deal
+  const dealId = req.params.dealId;
+
+  try {
+    const deal = await Deal.findById(dealId);
+
+    if (!deal) {
+      return res.status(404).json({ message: "deal not found" });
+    }
+
+    res.json(deal);
+  } catch (err) {
+    next(err);
+  }
+});
+
 /**
  * POST deals route
  */
