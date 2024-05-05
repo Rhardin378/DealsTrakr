@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Link from "next/link";
 import { addCompany } from "../store/slices/addCompanySlice";
+import { fetchCompanies } from "../store/slices/companies";
 import { useDispatch } from "react-redux";
 
 const AddCompany = () => {
@@ -40,13 +41,9 @@ const AddCompany = () => {
         imageURL,
         deals: [],
       })
-    )
-      .then(() => {
-        router.push("/dashboard");
-      })
-      .catch((error) => {
-        console.error("Could not add your company:", error);
-      });
+    );
+    handleClose();
+    dispatch(fetchCompanies());
   };
 
   return (
@@ -141,7 +138,7 @@ const AddCompany = () => {
           <Button
             className="add-company-button"
             onClick={handleAddCompanySubmit}
-            type="submit"
+            type="button"
           >
             Add Company
           </Button>

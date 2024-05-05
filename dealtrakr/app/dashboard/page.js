@@ -9,8 +9,6 @@ import Link from "next/link";
 import DealsListView from "../components/DealsListView";
 
 export default function Dashboard() {
-  const [allCompanies, _] = useState(companiesAPI.getAll());
-
   return (
     <main>
       <Tabs defaultActiveKey="companies" id="tab-example" className=" ms-3">
@@ -19,8 +17,7 @@ export default function Dashboard() {
         </Tab>
 
         <Tab eventKey="deals" title="Deals" className="tabsClass">
-        <DealsListView />
-
+          <DealsListView />
         </Tab>
         <Tab eventKey="dashboard" title="Dashboard" className="tabsClass">
           Tab content for Dashboard

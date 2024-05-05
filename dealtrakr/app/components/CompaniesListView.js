@@ -64,7 +64,7 @@ const CompaniesListView = () => {
             <th>Create Date</th>
             <th>Phone Number</th>
             <th>City</th>
-            <th>Country</th>
+            <th>State</th>
           </tr>
         </thead>
         <tbody>{renderCompanies}</tbody>
