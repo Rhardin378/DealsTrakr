@@ -6,6 +6,7 @@ import { useState } from "react";
 import { companiesAPI } from "../data/companiesAPI";
 import Link from "next/link";
 import CompanySearch from "./CompanySearch";
+import AddCompanyForm from "../companies/new/page";
 import axios from "axios";
 //searchbar
 // table
@@ -50,9 +51,10 @@ const CompaniesListView = () => {
     <div className="container companiesForm">
       <div className="formActions">
         <CompanySearch />
-        <Link href="/companies/new">
+        <AddCompanyForm />
+        {/* <Link href="/companies/new">
           <button className="addCompanyBtn">Add New Company</button>
-        </Link>
+        </Link> */}
       </div>
       <table className="table table-light table-striped">
         <thead>
