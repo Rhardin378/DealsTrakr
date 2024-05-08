@@ -43,6 +43,39 @@ h2 {
   text-align: center;
 }
 
+.add-deal-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* height: 75vh; */
+}
+
+.add-deal-form-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.add-deal-form-container input {
+  width: 100%;
+  padding: 2px;
+  margin-bottom: 10px;
+}
+
+.add-deal-form-container button {
+  padding: 2px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.add-deal-form-container label {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
 .add-company-button {
   background-color: #007bff;
   color: #fff;
@@ -103,6 +136,7 @@ table {
   justify-content: space-between;
 }
 .add-company-button,
+.add-deal-button,
 .addCompanyBtn {
   padding: 10px;
   font-weight: bold;

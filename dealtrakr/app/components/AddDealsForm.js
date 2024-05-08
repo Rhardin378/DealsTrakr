@@ -1,29 +1,33 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Link from "next/link";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import { addDeal } from "../store/slices/addDealSlice";
 import { useDispatch } from "react-redux";
+import { fetchDeals } from "../store/slices/deals";
 
-const AddDeal = () => {
+const AddDealsForm = () => {
+  const [show, setShow] = useState(false);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [dateClosed, setdateClosed] = useState("");
   const [dateInitiated, setDateInitiated] = useState("");
   const [stage, setStage] = useState("");
-  const router = useRouter();
   const dispatch = useDispatch();
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleStage = (e) => {
     const stageToSelect = e.target.value;
     setStage(stageToSelect);
   };
+
   const handleAddDealSubmit = (e) => {
     e.preventDefault();
     dispatch(
       addDeal({
-        // Dispatch the addDeal action with the deal data
         id,
         name,
         amount,
@@ -32,69 +36,87 @@ const AddDeal = () => {
         stage,
       })
     );
-    // .then(() => {
-    // //   router.push("/");
-    // }).catch(error => {
-    //   console.error("Could not add your deal:", error)
-    // });
+    handleClose();
+    dispatch(fetchDeals());
   };
 
   return (
-    // fix classnames in components
-    <div className="add-company-form-container">
-      <form onSubmit={handleAddDealSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <label>Deal Amount:</label>
-        <input
-          type="text"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-        />
-        <label>
-          {/* remove from form on backend */}
-          Date Initiated:
-        </label>
-        <input
-          type="date"
-          value={dateInitiated}
-          onChange={(e) => setDateInitiated(e.target.value)}
-        />
+    <>
+      <Button className="add-deal-button" onClick={handleShow}>
+        Add Deal
+      </Button>
 
-        <label>Date Closed:</label>
-        <input
-          type="date"
-          value={dateClosed}
-          onChange={(e) => setdateClosed(e.target.value)}
-        />
+      <Modal 
+        show={show} 
+        onHide={handleClose} 
+        backdrop="static" 
+        keyboard={false}
+        size="lg"
+      >
 
-        <label>
-          Stage:
-          {/* <input type="option" value={stage} onChange={(e) => setStage(e.target.value)} /> */}
-          {/* "initiated", "qualified", "contract sent", "closed won", "closed lost" */}
-          <select className="" onChange={handleStage}>
-            <option value="initiated">initiated</option>
-            <option value="qualified">qualified</option>
-            <option value="contract sent">contract sent</option>
-            <option value="closed won">closed won</option>
-            <option value="closed lost">closed lost</option>
-          </select>
-        </label>
-        <button type="submit" className="add-company-button">
-          Add Deal
-        </button>
-        <Link href="/dashboard">
-          <button className="add-company-button">Back</button>
-        </Link>
-      </form>
-    </div>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Deal</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <div className="add-deal-form-container">
+          <form>
+            <label className="form-label-mb2">
+              Name:
+              <input
+                className="form-control"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </label>
+            <label className="form-label mb-2">Deal Amount:</label>
+            <input
+              className="form-control"
+              type="text"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+            />
+            <label className="form-label mb-2">Date Initiated:</label>
+            <input
+              type="date"
+              value={dateInitiated}
+              onChange={(e) => setDateInitiated(e.target.value)}
+            />
+            <label>Date Closed:</label>
+            <input
+              className="form-control w-100"
+              type="date"
+              value={dateClosed}
+              onChange={(e) => setdateClosed(e.target.value)}
+            />
+            <label className="form-label mb-2">
+              Stage:
+              <select value={stage} onChange={handleStage}>
+                <option value="initiated">Initiated</option>
+                <option value="qualified">Qualified</option>
+                <option value="contract sent">Contract Sent</option>
+                <option value="closed won">Closed Won</option>
+                <option value="closed lost">Closed Lost</option>
+              </select>
+            </label>
+          </form>
+        </div>
+        </Modal.Body>
+        <Modal.Footer className="modal-footer">
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button 
+          className="add-company-button"
+          onClick={handleAddDealSubmit}
+          type="button"
+          >
+            Add Deal
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 };
 
-export default AddDeal;
+export default AddDealsForm;

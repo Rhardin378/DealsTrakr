@@ -2,9 +2,11 @@ import { useState } from "react";
 
 const DealSearch = () => {
   return (
-    <form>
-      <input type="text"></input>
-    </form>
+    <>
+      <div>
+        <input className="form-control" type="text"></input>
+      </div>
+    </>
   );
 };
 

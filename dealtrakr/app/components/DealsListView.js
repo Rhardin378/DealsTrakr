@@ -3,6 +3,7 @@ import { useEffect, React } from "react";
 import Link from "next/link";
 import DealSearch from "./DealSearch";
 import { fetchDeals } from "../store/slices/deals";
+import AddDealForm from "../deals/new/page";
 //searchbar
 // table
 //pagination component
@@ -35,10 +36,11 @@ const DealsListView = () => {
 
   return (
     <div className="container dealsForm">
-      <Link href="/deals/new">Add New Deal</Link>
-
+      <div className="formActions">
       <DealSearch />
-      <table className="table table-dark table-striped">
+      <AddDealForm />
+      </div>
+      <table className="table table-light table-striped">
         <thead>
           <tr>
             <th>Deal Name</th>
