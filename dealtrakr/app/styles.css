@@ -153,8 +153,12 @@ table {
 .delete-button {
   padding: 5px;
   font-weight: bold;
-  background-color: rgba(204, 85, 0, 1);
+  background-color: rgb(131, 131, 131);
   margin-top: 5px;
+}
+
+.delete-button:hover {
+  background-color: red;
 }
 
 /* deals */

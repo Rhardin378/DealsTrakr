@@ -4,6 +4,7 @@ import { fetchCompanyDetails } from "../store/slices/companyDetailsSlice";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import DeleteCompanyButton from "./DeleteCompanyButton";
+import Button from "react-bootstrap/Button";
 
 const CompanyDetails = () => {
   const { id } = useParams();
@@ -39,7 +40,7 @@ const CompanyDetails = () => {
       <DeleteCompanyButton companyId={companyDetails._id}/>
       <br/>
       <Link href="/dashboard">
-        <button className="back-button">Back to Dashboard</button>
+        <Button className="back-button">Back to Dashboard</Button>
       </Link>
       <br/>
       <br/>
