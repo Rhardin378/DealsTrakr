@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { fetchDeals } from "../store/slices/deals";
 import { deleteDeal } from "../store/slices/deleteDealSlice";
 import Link from "next/link";
+import Button from "react-bootstrap/Button";
 
 const DeleteDealButton = ({ dealId }) => {
   const dispatch = useDispatch();
@@ -18,9 +19,9 @@ const DeleteDealButton = ({ dealId }) => {
 
   return (
     <Link href='/dashboard'>
-    <button className="delete-button" onClick={handleDelete}>
+    <Button className="delete-button" variant="secondary" onClick={handleDelete}>
       Delete Deal
-    </button></Link>
+    </Button></Link>
 
   );
 };

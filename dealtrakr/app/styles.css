@@ -43,6 +43,39 @@ h2 {
   text-align: center;
 }
 
+.add-deal-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* height: 75vh; */
+}
+
+.add-deal-form-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.add-deal-form-container input {
+  width: 100%;
+  padding: 2px;
+  margin-bottom: 10px;
+}
+
+.add-deal-form-container button {
+  padding: 2px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.add-deal-form-container label {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
 .add-company-button {
   background-color: #007bff;
   color: #fff;
@@ -103,6 +136,7 @@ table {
   justify-content: space-between;
 }
 .add-company-button,
+.add-deal-button,
 .addCompanyBtn {
   padding: 10px;
   font-weight: bold;
@@ -119,8 +153,12 @@ table {
 .delete-button {
   padding: 5px;
   font-weight: bold;
-  background-color: rgba(204, 85, 0, 1);
+  background-color: rgb(131, 131, 131);
   margin-top: 5px;
+}
+
+.delete-button:hover {
+  background-color: red;
 }
 
 /* deals */
@@ -162,4 +200,14 @@ table {
 .modal-footer {
   display: flex;
   justify-content: center;
+}
+
+.btn-primary {
+  margin-top: 5px;
+}
+
+.login-bg {
+  background-color: rgba(200, 200, 200, 1);
+  padding-top: 10px;
+  padding-bottom: 50px;
 }
