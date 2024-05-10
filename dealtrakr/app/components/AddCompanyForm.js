@@ -43,6 +43,14 @@ const AddCompany = () => {
       })
     );
     handleClose();
+    setName('');
+    setCompanyOwner('');
+    setPhoneNumber(''),
+    setCity('');
+    setState('');
+    setCountry('');
+    setDateCreated('');
+    setImageURL('');
     dispatch(fetchCompanies());
   };
 

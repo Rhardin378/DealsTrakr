@@ -43,6 +43,12 @@ const AddDealsForm = () => {
       })
     );
     handleClose();
+    setName('');
+    setAmount('');
+    setdateClosed('');
+    setDateInitiated('');
+    setStage('');
+    setSelectedCompany('');
     dispatch(fetchDeals());
   };
 

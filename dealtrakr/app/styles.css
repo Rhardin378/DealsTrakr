@@ -153,7 +153,9 @@ table {
 .delete-button {
   padding: 5px;
   font-weight: bold;
-  background-color: rgb(131, 131, 131);
+  color: black;
+  background-color: #ffffff00;
+  border-color: black;
   margin-top: 5px;
 }
 
