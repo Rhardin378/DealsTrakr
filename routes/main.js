@@ -13,7 +13,7 @@ router.get("/companies", async (req, res, next) => {
 
     // message if no companies available
     if (!companies) {
-     return res.status(404).json({ message: "No companies yet!" })
+      return res.status(404).json({ message: "No companies yet!" });
     }
     res.json(companies);
   } catch (err) {
@@ -22,7 +22,7 @@ router.get("/companies", async (req, res, next) => {
 });
 
 router.get("/companies/:companyId", async (req, res, next) => {
-  //fetch company 
+  //fetch company
   const companyId = req.params.companyId;
 
   try {
@@ -43,18 +43,27 @@ router.get("/companies/:companyId", async (req, res, next) => {
  */
 router.post("/companies", async (req, res, next) => {
   try {
-    const {name, companyOwner, phoneNumber, city, state, country, dateCreated, imageURL} = req.body;
+    const {
+      name,
+      companyOwner,
+      phoneNumber,
+      city,
+      state,
+      country,
+      dateCreated,
+      imageURL,
+    } = req.body;
 
     // create new Company instance
     const newCompany = new Company({
       name,
-      companyOwner, 
-      phoneNumber, 
-      city, 
-      state, 
-      country, 
-      dateCreated, 
-      imageURL
+      companyOwner,
+      phoneNumber,
+      city,
+      state,
+      country,
+      dateCreated,
+      imageURL,
     });
 
     // save the new company to mongoDB
@@ -96,7 +105,7 @@ router.get("/deals", async (req, res, next) => {
 
     // message if no companies available
     if (!deals) {
-     return res.status(404).json({ message: "No deals yet!" })
+      return res.status(404).json({ message: "No deals yet!" });
     }
     res.json(deals);
   } catch (err) {
@@ -109,7 +118,7 @@ router.get("/deals/:dealId", async (req, res, next) => {
   const dealId = req.params.dealId;
 
   try {
-    const deal = await Deal.findById(dealId);
+    const deal = await Deal.findById(dealId).populate("company");
 
     if (!deal) {
       return res.status(404).json({ message: "deal not found" });
@@ -126,7 +135,8 @@ router.get("/deals/:dealId", async (req, res, next) => {
  */
 router.post("/deals", async (req, res, next) => {
   try {
-    const {name, amount, dateClosed, dateInitiated, stage, company} = req.body;
+    const { name, amount, dateClosed, dateInitiated, stage, company } =
+      req.body;
 
     // create new Company instance
     const newDeal = new Deal({
@@ -135,7 +145,7 @@ router.post("/deals", async (req, res, next) => {
       dateClosed,
       dateInitiated,
       stage,
-      company
+      company,
     });
 
     // save the new company to mongoDB
@@ -177,7 +187,7 @@ router.get("/users", async (req, res, next) => {
 
     // message if no companies available
     if (!users) {
-     return res.status(404).json({ message: "No users yet!" })
+      return res.status(404).json({ message: "No users yet!" });
     }
     res.json(users);
   } catch (err) {
@@ -190,13 +200,13 @@ router.get("/users", async (req, res, next) => {
  */
 router.post("/users", async (req, res, next) => {
   try {
-    const {email, password, username} = req.body;
+    const { email, password, username } = req.body;
 
     // create new Company instance
     const newUser = new User({
       email,
       password,
-      username
+      username,
     });
 
     // save the new company to mongoDB

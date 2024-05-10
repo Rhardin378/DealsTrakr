@@ -39,17 +39,18 @@ const AddDealsForm = () => {
         dateClosed,
         dateInitiated,
         stage,
-        company: selectedCompany
+        company: selectedCompany,
       })
-    );
+    ).then((data) => {
+      dispatch(fetchDeals());
+    });
     handleClose();
-    setName('');
-    setAmount('');
-    setdateClosed('');
-    setDateInitiated('');
-    setStage('');
-    setSelectedCompany('');
-    dispatch(fetchDeals());
+    setName("");
+    setAmount("");
+    setdateClosed("");
+    setDateInitiated("");
+    setStage("");
+    setSelectedCompany("");
   };
 
   return (
@@ -58,14 +59,13 @@ const AddDealsForm = () => {
         Add Deal
       </Button>
 
-      <Modal 
-        show={show} 
-        onHide={handleClose} 
-        backdrop="static" 
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
         keyboard={false}
         size="lg"
       >
-
         <Modal.Header closeButton>
           <Modal.Title>Add Deal</Modal.Title>
         </Modal.Header>
@@ -112,10 +112,15 @@ const AddDealsForm = () => {
                 </select>
               </label>
               <label>Select Company:</label>
-              <select value={selectedCompany} onChange={(e) => setSelectedCompany(e.target.value)}>
+              <select
+                value={selectedCompany}
+                onChange={(e) => setSelectedCompany(e.target.value)}
+              >
                 <option value="">Select a company</option>
                 {companies.map((company) => (
-                  <option key={company._id} value={company._id}>{company.name}</option>
+                  <option key={company._id} value={company._id}>
+                    {company.name}
+                  </option>
                 ))}
               </select>
             </form>
@@ -125,10 +130,10 @@ const AddDealsForm = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button 
-          className="add-company-button"
-          onClick={handleAddDealSubmit}
-          type="button"
+          <Button
+            className="add-company-button"
+            onClick={handleAddDealSubmit}
+            type="button"
           >
             Add Deal
           </Button>

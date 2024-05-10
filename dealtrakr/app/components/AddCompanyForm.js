@@ -41,17 +41,17 @@ const AddCompany = () => {
         imageURL,
         deals: [],
       })
-    );
+    ).then((data) => {
+      dispatch(fetchCompanies());
+    });
     handleClose();
-    setName('');
-    setCompanyOwner('');
-    setPhoneNumber(''),
-    setCity('');
-    setState('');
-    setCountry('');
-    setDateCreated('');
-    setImageURL('');
-    dispatch(fetchCompanies());
+    setName("");
+    setCompanyOwner("");
+    setPhoneNumber(""), setCity("");
+    setState("");
+    setCountry("");
+    setDateCreated("");
+    setImageURL("");
   };
 
   return (
