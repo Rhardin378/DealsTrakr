@@ -201,3 +201,7 @@ table {
   display: flex;
   justify-content: center;
 }
+
+.btn-primary {
+  margin-top: 5px;
+}

@@ -9,9 +9,6 @@ export default function Home() {
     <main>
       {/* links components */}
       <div>
-        <Link href="#">Companies</Link>
-        <Link href="#">Deals</Link>
-        <Link href="#">Dashboard</Link>
       </div>
       <br />
       <Login />
