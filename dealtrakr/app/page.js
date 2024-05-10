@@ -6,12 +6,10 @@ import Login from "./components/Login";
 export default function Home() {
 
   return (
-    <main>
-      {/* links components */}
+    <main className="login-bg">
       <div>
-      </div>
-      <br />
       <Login />
+      </div>
     </main>
   );
 }

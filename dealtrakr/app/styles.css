@@ -205,3 +205,9 @@ table {
 .btn-primary {
   margin-top: 5px;
 }
+
+.login-bg {
+  background-color: rgba(200, 200, 200, 1);
+  padding-top: 10px;
+  padding-bottom: 50px;
+}
