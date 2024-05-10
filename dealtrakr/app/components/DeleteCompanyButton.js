@@ -19,7 +19,7 @@ const DeleteCompanyButton = ({ companyId }) => {
 
   return (
     <Link href='/dashboard'>
-    <Button className="delete-button" variant="secondary" onClick={handleDelete}>
+    <Button className="delete-button" onClick={handleDelete}>
       Delete Company
     </Button></Link>
 

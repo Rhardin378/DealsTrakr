@@ -31,7 +31,7 @@ const Login = () => {
         <div className="col-md-6">
           <div className="card">
             <div className="card-body">
-              <h2 className="text-center mb-4"> DealsTrakr Login</h2>
+              <h2 className="text-center mb-4">Login</h2>
               <div className="form-group">
                 <label>Username:</label>
                 <input
