@@ -9,13 +9,10 @@ import Button from "react-bootstrap/Button";
 
 const dealDetails = () => {
   const { id } = useParams();
-  const { dealDetails, loading, error } = useSelector(
+  const { dealDetails, loading, error, companyName } = useSelector(
     (state) => state.dealDetails
   );
 
-  const companyName = useSelector(
-    (state) => state.dealDetails.dealDetails.company
-  );
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchDealDetails(id));
