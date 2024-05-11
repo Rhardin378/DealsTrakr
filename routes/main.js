@@ -158,6 +158,25 @@ router.post("/deals", async (req, res, next) => {
   }
 });
 
+// router.put("/deals/:dealId")
+/**
+ * UPDATE DEAL stage BY ID ROUTE
+ */
+router.put("/deals/:dealId", async (req, res, next) => {
+  const dealId = req.params.dealId;
+
+  try {
+    const deal = await Deal.findByIdAndUpdate(dealId, req.body, { new: true });
+    res.status(200).json({ message: "updated deal stage" });
+
+    if (!deal) {
+      return res.status(404).json({ message: "No Deal with this id found" });
+    }
+  } catch (err) {
+    return res.status(404).json({ message: "No Deal with this id found" });
+  }
+});
+
 /**
  * DELETE deal by ID route
  */
