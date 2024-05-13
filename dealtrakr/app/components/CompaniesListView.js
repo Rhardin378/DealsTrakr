@@ -18,7 +18,14 @@ const CompaniesListView = () => {
   useEffect(() => {
     dispatch(fetchCompanies());
   }, [dispatch]);
+
   const allCompanies = useSelector((state) => state.companies.companiesToShow);
+
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   const renderCompanies = allCompanies.map((company) => {
     return (
       <tr scope="row">
@@ -34,7 +41,7 @@ const CompaniesListView = () => {
           <span>{company.companyOwner}</span>
         </td>
         <td scope="col">
-          <span>{company.dateCreated}</span>
+          <span>{formatDate(company.dateCreated)}</span>
         </td>
         <td scope="col">
           <span>{company.phoneNumber}</span>

@@ -17,6 +17,7 @@ const dealDetails = () => {
   useEffect(() => {
     dispatch(fetchDealDetails(id));
   }, [dispatch, id]);
+  
 
   if (loading === "loading") {
     return <div>Loading...</div>;
