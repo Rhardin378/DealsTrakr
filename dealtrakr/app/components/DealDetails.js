@@ -3,9 +3,11 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDealDetails } from "../store/slices/dealDetailsSlice";
 import DeleteDealButton from "./DeleteDealButton";
+import EditDealButton from "./EditDealButton"
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Button from "react-bootstrap/Button";
+import EditDealsForm from "./EditDealForm";
 
 const dealDetails = () => {
   const { id } = useParams();
@@ -56,6 +58,7 @@ const dealDetails = () => {
       <p>
         <strong>Company:</strong> {companyName}
       </p>
+      <EditDealsForm  />
       <DeleteDealButton dealId={dealDetails._id} />
       <br />
       <Link href="/dashboard">
