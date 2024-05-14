@@ -14,6 +14,11 @@ const CompanyDetails = () => {
     dispatch(fetchCompanyDetails(id));
   }, [dispatch, id]);
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   if (loading === 'loading') {
     return <div>Loading...</div>;
   }
@@ -34,7 +39,7 @@ const CompanyDetails = () => {
       </div>
       <br/>
       <p><strong>Company Owner:</strong> {companyDetails.companyOwner}</p>
-      <p><strong>Date Created:</strong> {companyDetails.dateCreated}</p>
+      <p><strong>Date Created:</strong> {formatDate(companyDetails.dateCreated)}</p>
       <p><strong>Phone Number:</strong> {companyDetails.phoneNumber}</p>
       <p><strong>City:</strong> {companyDetails.city}</p>
       <DeleteCompanyButton companyId={companyDetails._id}/>

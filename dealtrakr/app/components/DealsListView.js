@@ -14,7 +14,14 @@ const DealsListView = () => {
   useEffect(() => {
     dispatch(fetchDeals());
   }, [dispatch]);
+
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   const allDeals = useSelector((state) => state.deals.dealsToShow);
+
   const renderDeals = allDeals.map((deal) => {
     return (
       <tr scope="row" key={deal._id}>
@@ -29,7 +36,7 @@ const DealsListView = () => {
           <span>{deal.amount}</span>
         </td>
         <td scope="col">
-          <span>{deal.dateClosed}</span>
+          <span>{formatDate(deal.dateClosed)}</span>
         </td>
       </tr>
     );

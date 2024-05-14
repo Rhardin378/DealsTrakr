@@ -17,6 +17,11 @@ const dealDetails = () => {
   useEffect(() => {
     dispatch(fetchDealDetails(id));
   }, [dispatch, id]);
+  
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   if (loading === "loading") {
     return <div>Loading...</div>;
@@ -40,10 +45,10 @@ const dealDetails = () => {
         <strong>Amount:</strong> {dealDetails.amount}
       </p>
       <p>
-        <strong>Date Initiated:</strong> {dealDetails.dateInitiated}
+        <strong>Date Initiated:</strong> {formatDate(dealDetails.dateInitiated)}
       </p>
       <p>
-        <strong>Date Closed:</strong> {dealDetails.dateClosed}
+        <strong>Date Closed:</strong> {formatDate(dealDetails.dateClosed)}
       </p>
       <p>
         <strong>Stage:</strong> {dealDetails.stage}

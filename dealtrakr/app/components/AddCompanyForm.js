@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import Link from "next/link";
+import { useSelector } from "react-redux";
 import { addCompany } from "../store/slices/addCompanySlice";
 import { fetchCompanies } from "../store/slices/companies";
 import { useDispatch } from "react-redux";
@@ -19,14 +19,39 @@ const AddCompany = () => {
   const [country, setCountry] = useState("");
   const [dateCreated, setDateCreated] = useState("");
   const [imageURL, setImageURL] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const handleClose = () => setShow(false);
+  // Select the list of companies from the Redux store
+  const companies = useSelector((state) => state.companies.companiesToShow);
+
+  const handleClose = () => {
+    setShow(false);
+    // Reset the form fields after closing modal - for error messages
+    setName("");
+    setCompanyOwner("");
+    setPhoneNumber(""), setCity("");
+    setState("");
+    setCountry("");
+    setDateCreated("");
+    setImageURL("");
+    setErrorMessage("");
+  };
   const handleShow = () => setShow(true);
 
   const handleAddCompanySubmit = (e) => {
     e.preventDefault();
+
+    // Check if the company name already exists in the list of companies
+    const companyExists = companies.some(company => company.name === name);
+  
+    if (companyExists) {
+      // If company exists, set error message
+      setErrorMessage("Company already exists in DealsTrakr");
+      return;
+    } else {
+    // If the company doesn't exist, proceed to dispatch the addCompany action
     dispatch(
       addCompany({
         // Dispatch the addCompany action with the company data
@@ -44,6 +69,8 @@ const AddCompany = () => {
     ).then((data) => {
       dispatch(fetchCompanies());
     });
+
+    // Reset the form fields after submission
     handleClose();
     setName("");
     setCompanyOwner("");
@@ -52,6 +79,8 @@ const AddCompany = () => {
     setCountry("");
     setDateCreated("");
     setImageURL("");
+    setErrorMessage("");
+  }
   };
 
   return (
@@ -72,6 +101,7 @@ const AddCompany = () => {
         </Modal.Header>
         <Modal.Body>
           <div className="add-company-form-container">
+          <div className="error-message" style={{ color: "red", marginBottom: "5px" }}>{errorMessage}</div>
             <form>
               <label className="form-label mb-2">Name:</label>
               <input
