@@ -4,7 +4,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 const DATA = [
   {
     id: "0e2f0db1-5457-46b0-949e-8032d2f9997a",
-    name: "Walmart",
+    name: "Deals Initiated",
     items: [
       { id: "26fd50b3-3841-496e-8b32-73636f6f4197", name: "3% Milk" },
       { id: "b0ee9d50-d0a6-46f8-96e3-7f3f0f9a2525", name: "Butter" },
