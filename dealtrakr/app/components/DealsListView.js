@@ -4,6 +4,7 @@ import Link from "next/link";
 import DealSearch from "./DealSearch";
 import { fetchDeals } from "../store/slices/deals";
 import AddDealForm from "../deals/new/page";
+import DealsKhanBan from "../components/DealsKhanBan";
 //searchbar
 // table
 //pagination component
@@ -16,12 +17,12 @@ const DealsListView = () => {
   const allDeals = useSelector((state) => state.deals.dealsToShow);
   const renderDeals = allDeals.map((deal) => {
     return (
-      <tr scope="row">
+      <tr scope="row" key={deal._id}>
         <td scope="col">
           <div>
-          <span>
-            <Link href={`/deals/${deal._id}`}>{deal.name}</Link>
-          </span>
+            <span>
+              <Link href={`/deals/${deal._id}`}>{deal.name}</Link>
+            </span>
           </div>
         </td>
         <td scope="col">
@@ -37,8 +38,8 @@ const DealsListView = () => {
   return (
     <div className="container dealsForm">
       <div className="formActions">
-      <DealSearch />
-      <AddDealForm />
+        <DealSearch />
+        <AddDealForm />
       </div>
       <table className="table table-light table-striped">
         <thead>
@@ -50,6 +51,9 @@ const DealsListView = () => {
         </thead>
         <tbody>{renderDeals}</tbody>
       </table>
+      <div>
+        <DealsKhanBan />
+      </div>
     </div>
   );
 };
