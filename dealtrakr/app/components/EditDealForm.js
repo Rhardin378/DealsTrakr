@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { addDeal } from "../store/slices/addDealSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDeals } from "../store/slices/deals";
 import { fetchCompanies } from "../store/slices/companies";
 import { fetchDealDetails } from "../store/slices/dealDetailsSlice";
 import { editDeal } from "../store/slices/editDealSlice";
+import { combineReducers } from "@reduxjs/toolkit";
 
 const EditDealsForm = () => {
   const [show, setShow] = useState(false);
@@ -18,17 +18,29 @@ const EditDealsForm = () => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const dispatch = useDispatch();
   const companies = useSelector((state) => state.companies.companiesToShow);
-  const { dealDetails, loading, error, companyName } = useSelector(
-    (state) => state.dealDetails
-  );
+  const { dealDetails, companyName } = useSelector((state) => state.dealDetails);
 
   useEffect(() => {
     // Fetch companies when component mounts
     dispatch(fetchCompanies());
   }, [dispatch]); // Dependency array to ensure useEffect runs only once
 
+  useEffect(() => {
+    // Set initial values from dealDetails
+    if (dealDetails) {
+      setName(dealDetails.name);
+      setAmount(dealDetails.amount);
+      setdateClosed(dealDetails.dateClosed);
+      setDateInitiated(dealDetails.dateInitiated);
+      setStage(dealDetails.stage);
+      setSelectedCompany(dealDetails.company);
+    }
+  }, [dealDetails]);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    dispatch(fetchDealDetails(dealDetails._id)); // Fetch deal details when edited
+    setShow(false);
+  };
   const handleShow = () => setShow(true);
 
   const handleStage = (e) => {
@@ -36,27 +48,26 @@ const EditDealsForm = () => {
     setStage(stageToSelect);
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   const handleEditDealSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      editDeal({
-        name,
-        amount,
-        dateClosed,
-        dateInitiated,
-        stage,
-        company: selectedCompany,
-      })
-    ).then((data) => {
+    const dealId = dealDetails._id;
+    const dealData = {
+      name,
+      amount,
+      dateClosed,
+      dateInitiated,
+      stage,
+      company: selectedCompany,
+    };
+    dispatch(editDeal({ dealId, dealData })).then(() => {
       dispatch(fetchDeals());
+      handleClose();
     });
-    handleClose();
-    setName("");
-    setAmount("");
-    setdateClosed("");
-    setDateInitiated("");
-    setStage("");
-    setSelectedCompany("");
   };
 
   return (
@@ -83,7 +94,7 @@ const EditDealsForm = () => {
                 <input
                   className="form-control"
                   type="text"
-                  value={dealDetails.name}
+                  value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
               </label>
@@ -91,44 +102,47 @@ const EditDealsForm = () => {
               <input
                 className="form-control"
                 type="text"
-                value={dealDetails.amount}
+                value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />
-              <label className="form-label mb-2">Date Initiated:</label>
+              <label className="form-label mb-2">Date Initiated: <strong>{formatDate(dealDetails.dateInitiated)}</strong></label>
               <input
+                className="form-control"
                 type="date"
-                value={dealDetails.dateInitiated}
+                value={dateInitiated}
                 onChange={(e) => setDateInitiated(e.target.value)}
               />
-              <label>Date Closed:</label>
+              <label className="form-label mb-2">Date Closed: <strong>{formatDate(dealDetails.dateClosed)}</strong></label>
               <input
-                className="form-control w-100"
+                className="form-control"
                 type="date"
-                value={dealDetails.dateClosed}
+                value={dateClosed}
                 onChange={(e) => setdateClosed(e.target.value)}
               />
               <label className="form-label mb-2">
                 Stage:
-                <select value={dealDetails.stage} onChange={handleStage}>
-                  <option value="initiated">Initiated</option>
-                  <option value="qualified">Qualified</option>
-                  <option value="contract sent">Contract Sent</option>
-                  <option value="closed won">Closed Won</option>
-                  <option value="closed lost">Closed Lost</option>
+                <select className="form-select" value={stage} onChange={handleStage}>
+                  <option value="Initiated">Initiated</option>
+                  <option value="Qualified">Qualified</option>
+                  <option value="Contract Sent">Contract Sent</option>
+                  <option value="Closed Won">Closed Won</option>
+                  <option value="Closed Lost">Closed Lost</option>
                 </select>
               </label>
-              <label>Select Company:</label>
+              <label className="form-label mb-2">Company:
               <select
-                value={companyName}
+                className="form-select"
+                value={selectedCompany}
                 onChange={(e) => setSelectedCompany(e.target.value)}
               >
-                <option value="">Select a company</option>
+                <option value="">{companyName}</option>
                 {companies.map((company) => (
                   <option key={company._id} value={company._id}>
                     {company.name}
                   </option>
                 ))}
               </select>
+              </label>
             </form>
           </div>
         </Modal.Body>
@@ -141,7 +155,7 @@ const EditDealsForm = () => {
             onClick={handleEditDealSubmit}
             type="button"
           >
-            Add Deal
+            Edit Deal
           </Button>
         </Modal.Footer>
       </Modal>

@@ -158,7 +158,6 @@ router.post("/deals", async (req, res, next) => {
   }
 });
 
-// router.put("/deals/:dealId")
 /**
  * UPDATE DEAL stage BY ID ROUTE
  */
@@ -176,6 +175,7 @@ router.put("/deals/:dealId", async (req, res, next) => {
     return res.status(404).json({ message: "No Deal with this id found" });
   }
 });
+
 
 /**
  * DELETE deal by ID route
