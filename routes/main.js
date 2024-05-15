@@ -77,6 +77,25 @@ router.post("/companies", async (req, res, next) => {
 });
 
 /**
+ * UPDATE COMPANY stage BY ID ROUTE
+ */
+router.put("/companies/:companyId", async (req, res, next) => {
+  const companyId = req.params.companyId;
+
+  try {
+    const company = await Company.findByIdAndUpdate(companyId, req.body, { new: true });
+    res.status(200).json({ message: "updated company details" });
+
+    if (!company) {
+      return res.status(404).json({ message: "No company with this id found" });
+    }
+  } catch (err) {
+    return res.status(404).json({ message: "No company with this id found" });
+  }
+});
+
+
+/**
  * DELETE company by ID route
  */
 router.delete("/companies/:companyId", async (req, res, next) => {
