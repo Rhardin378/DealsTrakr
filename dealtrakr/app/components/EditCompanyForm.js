@@ -36,6 +36,11 @@ const EditCompany = () => {
   };
   const handleShow = () => setShow(true);
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   useEffect(() => {
     // Set initial values from companyDetails when it changes
     if (companyDetails) {
@@ -140,7 +145,7 @@ const EditCompany = () => {
                 onChange={(e) => setCountry(e.target.value)}
               />
 
-              <label>Date Created:</label>
+              <label>Date Created: <strong>{formatDate(companyDetails.dateCreated)}</strong></label>
               <input
                 className="form-control"
                 type="date"
