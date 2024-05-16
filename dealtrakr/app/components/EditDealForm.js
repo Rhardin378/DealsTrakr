@@ -2,11 +2,9 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDeals } from "../store/slices/deals";
+import { fetchDeals, editDeal } from "../store/slices/deals";
 import { fetchCompanies } from "../store/slices/companies";
 import { fetchDealDetails } from "../store/slices/dealDetailsSlice";
-import { editDeal } from "../store/slices/editDealSlice";
-import { combineReducers } from "@reduxjs/toolkit";
 
 const EditDealsForm = () => {
   const [show, setShow] = useState(false);
@@ -18,7 +16,9 @@ const EditDealsForm = () => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const dispatch = useDispatch();
   const companies = useSelector((state) => state.companies.companiesToShow);
-  const { dealDetails, companyName } = useSelector((state) => state.dealDetails);
+  const { dealDetails, companyName } = useSelector(
+    (state) => state.dealDetails
+  );
 
   useEffect(() => {
     // Fetch companies when component mounts
@@ -49,7 +49,7 @@ const EditDealsForm = () => {
   };
 
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
@@ -105,14 +105,20 @@ const EditDealsForm = () => {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />
-              <label className="form-label mb-2">Date Initiated: <strong>{formatDate(dealDetails.dateInitiated)}</strong></label>
+              <label className="form-label mb-2">
+                Date Initiated:{" "}
+                <strong>{formatDate(dealDetails.dateInitiated)}</strong>
+              </label>
               <input
                 className="form-control"
                 type="date"
                 value={dateInitiated}
                 onChange={(e) => setDateInitiated(e.target.value)}
               />
-              <label className="form-label mb-2">Date Closed: <strong>{formatDate(dealDetails.dateClosed)}</strong></label>
+              <label className="form-label mb-2">
+                Date Closed:{" "}
+                <strong>{formatDate(dealDetails.dateClosed)}</strong>
+              </label>
               <input
                 className="form-control"
                 type="date"
@@ -121,7 +127,11 @@ const EditDealsForm = () => {
               />
               <label className="form-label mb-2">
                 Stage:
-                <select className="form-select" value={stage} onChange={handleStage}>
+                <select
+                  className="form-select"
+                  value={stage}
+                  onChange={handleStage}
+                >
                   <option value="Initiated">Initiated</option>
                   <option value="Qualified">Qualified</option>
                   <option value="Contract Sent">Contract Sent</option>
@@ -129,19 +139,20 @@ const EditDealsForm = () => {
                   <option value="Closed Lost">Closed Lost</option>
                 </select>
               </label>
-              <label className="form-label mb-2">Company:
-              <select
-                className="form-select"
-                value={selectedCompany}
-                onChange={(e) => setSelectedCompany(e.target.value)}
-              >
-                <option value="">{companyName}</option>
-                {companies.map((company) => (
-                  <option key={company._id} value={company._id}>
-                    {company.name}
-                  </option>
-                ))}
-              </select>
+              <label className="form-label mb-2">
+                Company:
+                <select
+                  className="form-select"
+                  value={selectedCompany}
+                  onChange={(e) => setSelectedCompany(e.target.value)}
+                >
+                  <option value="">{companyName}</option>
+                  {companies.map((company) => (
+                    <option key={company._id} value={company._id}>
+                      {company.name}
+                    </option>
+                  ))}
+                </select>
               </label>
             </form>
           </div>

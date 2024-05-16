@@ -7,8 +7,9 @@ import companyDetailsReducer from "./slices/companyDetailsSlice";
 import dealDetailsReducer from "../../app/store/slices/dealDetailsSlice";
 import deleteCompanyReducer from "../store/slices/deleteCompanySlice";
 import deleteDealReducer from "../store/slices/deleteDealSlice";
-import editDealReducer from "../store/slices/editDealSlice";
-import editCompanyReducer, { editCompany } from "../store/slices/editCompanySlice";
+import editCompanyReducer, {
+  editCompany,
+} from "../store/slices/editCompanySlice";
 
 const rootReducer = combineReducers({
   companies: companiesReducer,
@@ -19,8 +20,7 @@ const rootReducer = combineReducers({
   addDeal: addDealReducer,
   dealDetails: dealDetailsReducer,
   deleteDeal: deleteDealReducer,
-  editDeal: editDealReducer,
-  editCompany: editCompanyReducer
+  editCompany: editCompanyReducer,
   // auth: authReducer
 });
 

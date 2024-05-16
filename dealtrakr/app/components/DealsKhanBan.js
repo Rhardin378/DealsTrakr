@@ -11,8 +11,8 @@
 
 import { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { fetchDeals } from "../store/slices/deals";
-import { editDeal } from "../store/slices/editDealSlice";
+import { fetchDeals, editDeal } from "../store/slices/deals";
+
 // structure data imported from store
 const DATA = [
   {
