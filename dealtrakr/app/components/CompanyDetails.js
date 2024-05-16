@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import DeleteCompanyButton from "./DeleteCompanyButton";
 import Button from "react-bootstrap/Button";
+import EditCompanyForm from "./EditCompanyForm";
 
 const CompanyDetails = () => {
   const { id } = useParams();
@@ -42,6 +43,7 @@ const CompanyDetails = () => {
       <p><strong>Date Created:</strong> {formatDate(companyDetails.dateCreated)}</p>
       <p><strong>Phone Number:</strong> {companyDetails.phoneNumber}</p>
       <p><strong>City:</strong> {companyDetails.city}</p>
+      <EditCompanyForm  />
       <DeleteCompanyButton companyId={companyDetails._id}/>
       <br/>
       <Link href="/dashboard">
