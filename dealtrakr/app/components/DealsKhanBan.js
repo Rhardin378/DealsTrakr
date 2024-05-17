@@ -9,9 +9,38 @@
 // //closed won
 // //closed lost
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { fetchDeals, editDeal } from "../store/slices/deals";
+import { useDispatch, useSelector } from "react-redux";
+
+// let deals = [
+//   {
+//     id: "initiated",
+//     name: "Initiated",
+//     deals: [...initiatedDeals],
+//   },
+//   {
+//     id: "qualified",
+//     name: "qualified",
+//     deals: [...qualifiedDeals],
+//   },
+//   {
+//     id: "contract_sent",
+//     name: "Contract Sent",
+//     deals: [...contractSentDeals],
+//   },
+//   {
+//     id: "closed_won",
+//     name: "Closed Won",
+//     deals: [...closedWonDeals],
+//   },
+//   {
+//     id: "closed_lost",
+//     name: "Closed Lost",
+//     deals: [...closedLostDeals],
+//   },
+// ];
 
 // structure data imported from store
 const DATA = [
@@ -66,6 +95,85 @@ const DATA = [
 
 const DealsKhanBan = () => {
   const [stores, setStores] = useState(DATA);
+  const [deals, setDeals] = useState([]);
+
+  const dealData = useSelector((state) => state.deals.dealsToShow);
+  const status = useSelector((state) => state.deals.status);
+  const error = useSelector((state) => state.deals.error);
+  const dispatch = useDispatch();
+
+  const formatDealData = (
+    initiated,
+    qualified,
+    contractSent,
+    closedWon,
+    closedLost
+  ) => {
+    let deals = [
+      {
+        id: "initiated",
+        name: "Initiated",
+        deals: [...initiated],
+      },
+      {
+        id: "qualified",
+        name: "qualified",
+        deals: [...qualified],
+      },
+      {
+        id: "contract_sent",
+        name: "Contract Sent",
+        deals: [...contractSent],
+      },
+      {
+        id: "closed_won",
+        name: "Closed Won",
+        deals: closedWon,
+      },
+      {
+        id: "closed_lost",
+        name: "Closed Lost",
+        deals: closedLost,
+      },
+    ];
+    setDeals(deals);
+  };
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchDeals());
+    }
+  }, [status, dispatch]);
+
+  useEffect(() => {
+    if (status === "succeeded") {
+      let initiated = dealData.filter((deal) => deal.stage == "Initiated");
+      console.log(initiated);
+      let qualified = dealData.filter((deal) => deal.stage == "Qualified");
+      console.log(qualified);
+
+      let contractSent = dealData.filter(
+        (deal) => deal.stage == "Contract Sent"
+      );
+      console.log(contractSent);
+
+      let closedWon = dealData.filter((deal) => deal.stage == "Closed Won");
+      console.log(closedWon);
+
+      let closedLost = dealData.filter((deal) => deal.stage == "Closed Lost");
+      console.log(closedLost);
+
+      formatDealData(initiated, qualified, contractSent, closedWon, closedLost);
+    }
+  }, [status, dealData]);
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (status === "failed") {
+    return <div>Error: {error}</div>;
+  }
 
   const handleDragAndDrop = (result) => {
     const { source, destination } = result;
@@ -79,33 +187,31 @@ const DealsKhanBan = () => {
       return;
     }
 
-    const sourceStage = stores.find((store) => store.id === source.droppableId);
-    const destinationStage = stores.find(
-      (store) => store.id === destination.droppableId
+    const sourceStage = deals.find((deal) => deal.id === source.droppableId);
+    const destinationStage = deals.find(
+      (deal) => deal.id === destination.droppableId
     );
 
-    const sourceItems = Array.from(sourceStage.items);
+    const sourceItems = Array.from(sourceStage.deals);
     const [movedItem] = sourceItems.splice(source.index, 1);
 
     if (source.droppableId === destination.droppableId) {
       sourceItems.splice(destination.index, 0, movedItem);
-      const newStores = stores.map((store) =>
-        store.id === source.droppableId
-          ? { ...store, items: sourceItems }
-          : store
+      const newDeals = deals.map((deal) =>
+        deal.id === source.droppableId ? { ...deal, deals: sourceItems } : deal
       );
-      setStores(newStores);
+      setDeals(newDeals);
     } else {
-      const destinationItems = Array.from(destinationStage.items);
+      const destinationItems = Array.from(destinationStage.deals);
       destinationItems.splice(destination.index, 0, movedItem);
-      const newStores = stores.map((store) =>
-        store.id === source.droppableId
-          ? { ...store, items: sourceItems }
-          : store.id === destination.droppableId
-          ? { ...store, items: destinationItems }
-          : store
+      const newDeals = deals.map((deal) =>
+        deal.id === source.droppableId
+          ? { ...deal, deals: sourceItems }
+          : deal.id === destination.droppableId
+          ? { ...deal, deals: destinationItems }
+          : deal
       );
-      setStores(newStores);
+      setDeals(newDeals);
     }
 
     // Post request example
@@ -123,19 +229,19 @@ const DealsKhanBan = () => {
       <div className="card">
         <DragDropContext onDragEnd={handleDragAndDrop}>
           <div className="columns">
-            {stores.map((store, index) => (
-              <Droppable droppableId={store.id} key={store.id}>
+            {deals.map((deal, index) => (
+              <Droppable droppableId={deal.id} key={deal.id}>
                 {(provided) => (
                   <div
                     className="store"
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
-                    <h3>{store.name}</h3>
-                    {store.items.map((item, index) => (
+                    <h3>{deal.name}</h3>
+                    {deal.deals.map((deal, index) => (
                       <Draggable
-                        key={item.id}
-                        draggableId={item.id}
+                        key={deal._id}
+                        draggableId={deal._id}
                         index={index}
                       >
                         {(provided) => (
@@ -145,7 +251,7 @@ const DealsKhanBan = () => {
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                           >
-                            {item.name}
+                            {deal.name}
                           </div>
                         )}
                       </Draggable>

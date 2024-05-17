@@ -12,7 +12,7 @@ const AddDealsForm = () => {
   const [amount, setAmount] = useState("");
   const [dateClosed, setdateClosed] = useState("");
   const [dateInitiated, setDateInitiated] = useState("");
-  const [stage, setStage] = useState("");
+  const [stage, setStage] = useState("Initiated");
   const [selectedCompany, setSelectedCompany] = useState("");
   const dispatch = useDispatch();
   const companies = useSelector((state) => state.companies.companiesToShow); // Corrected selector for companies
@@ -26,8 +26,7 @@ const AddDealsForm = () => {
   const handleShow = () => setShow(true);
 
   const handleStage = (e) => {
-    const stageToSelect = e.target.value;
-    setStage(stageToSelect);
+    setStage(e.target.value);
   };
 
   const handleAddDealSubmit = (e) => {
@@ -104,11 +103,11 @@ const AddDealsForm = () => {
               <label className="form-label mb-2">
                 Stage:
                 <select value={stage} onChange={handleStage}>
-                  <option value="initiated">Initiated</option>
-                  <option value="qualified">Qualified</option>
-                  <option value="contract sent">Contract Sent</option>
-                  <option value="closed won">Closed Won</option>
-                  <option value="closed lost">Closed Lost</option>
+                  <option value="Initiated">Initiated</option>
+                  <option value="Qualified">Qualified</option>
+                  <option value="Contract Sent">Contract Sent</option>
+                  <option value="Closed Won">Closed Won</option>
+                  <option value="Closed Lost">Closed Lost</option>
                 </select>
               </label>
               <label>Select Company:</label>
