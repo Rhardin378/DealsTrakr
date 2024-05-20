@@ -172,7 +172,7 @@ const EditCompany = () => {
             onClick={handleEditCompanySubmit}
             type="button"
           >
-            Edit Company
+            Save
           </Button>
         </Modal.Footer>
       </Modal>
