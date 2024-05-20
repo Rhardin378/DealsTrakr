@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchDeals } from "../store/slices/deals";
 import { deleteDeal } from "../store/slices/deleteDealSlice";
 import Link from "next/link";
 import Button from "react-bootstrap/Button";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const DeleteDealButton = ({ dealId }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => setShowModal(true);
@@ -19,23 +20,22 @@ const DeleteDealButton = ({ dealId }) => {
       dispatch(deleteDeal(dealId));
       dispatch(fetchDeals());
       handleCloseModal();
+      router.push('/dashboard');
     } catch (error) {
-      console.error("Error deleting track:", error);
+      console.error("Error deleting deal:", error);
     }
   };
 
   return (
     <>
       <Button className="delete-button" onClick={handleShowModal}>
-        Delete Deal
+          Delete Deal
       </Button>
-      <Link href='/dashboard'>
-        <ConfirmDeleteModal
+      <ConfirmDeleteModal
         show={showModal}
         handleClose={handleCloseModal}
         handleConfirm={handleDelete}
-        />
-      </Link>
+      />
     </>
   );
 };

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 import { fetchCompanies } from "../store/slices/companies";
 import { deleteCompany } from "../store/slices/deleteCompanySlice";
 import Button from "react-bootstrap/Button";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
-import Link from "next/link";
 
 const DeleteCompanyButton = ({ companyId }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => setShowModal(true);
@@ -16,8 +17,9 @@ const DeleteCompanyButton = ({ companyId }) => {
   const handleDelete = async () => {
     try {
       dispatch(deleteCompany(companyId));
-      dispatch(fetchCompanies()); 
+      dispatch(fetchCompanies());
       handleCloseModal();
+      router.push('/dashboard');
     } catch (error) {
       console.error("Error deleting company:", error);
     }
@@ -28,13 +30,11 @@ const DeleteCompanyButton = ({ companyId }) => {
       <Button className="delete-button" onClick={handleShowModal}>
         Delete Company
       </Button>
-      <Link href='/dashboard'>
-        <ConfirmDeleteModal
+      <ConfirmDeleteModal
         show={showModal}
         handleClose={handleCloseModal}
         handleConfirm={handleDelete}
-        />
-      </Link>
+      />
     </>
   );
 };
