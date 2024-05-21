@@ -83,7 +83,9 @@ router.put("/companies/:companyId", async (req, res, next) => {
   const companyId = req.params.companyId;
 
   try {
-    const company = await Company.findByIdAndUpdate(companyId, req.body, { new: true });
+    const company = await Company.findByIdAndUpdate(companyId, req.body, {
+      new: true,
+    });
     res.status(200).json({ message: "updated company details" });
 
     if (!company) {
@@ -93,7 +95,6 @@ router.put("/companies/:companyId", async (req, res, next) => {
     return res.status(404).json({ message: "No company with this id found" });
   }
 });
-
 
 /**
  * DELETE company by ID route
@@ -195,6 +196,23 @@ router.put("/deals/:dealId", async (req, res, next) => {
   }
 });
 
+router.put("/deals/:dealId/all", async (req, res, next) => {
+  const dealId = req.params.dealId;
+
+  try {
+    const deal = await Deal.findByIdAndUpdate(dealId, req.body, { new: true });
+    res.status(200);
+    const updatedDeals = await Deal.find();
+
+    res.json(updatedDeals);
+
+    if (!deal) {
+      return res.status(404).json({ message: "No Deal with this id found" });
+    }
+  } catch (err) {
+    return res.status(404).json({ message: "No Deal with this id found" });
+  }
+});
 
 /**
  * DELETE deal by ID route

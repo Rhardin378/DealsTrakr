@@ -101,7 +101,9 @@ const DealsKhanBan = () => {
   const status = useSelector((state) => state.deals.status);
   const error = useSelector((state) => state.deals.error);
   const dispatch = useDispatch();
-
+  if (error) {
+    console.log(error);
+  }
   const formatDealData = (
     initiated,
     qualified,
@@ -113,17 +115,17 @@ const DealsKhanBan = () => {
       {
         id: "initiated",
         name: "Initiated",
-        deals: [...initiated],
+        deals: initiated,
       },
       {
         id: "qualified",
         name: "qualified",
-        deals: [...qualified],
+        deals: qualified,
       },
       {
         id: "contract_sent",
         name: "Contract Sent",
-        deals: [...contractSent],
+        deals: contractSent,
       },
       {
         id: "closed_won",
@@ -176,7 +178,7 @@ const DealsKhanBan = () => {
   }
 
   const handleDragAndDrop = (result) => {
-    const { source, destination } = result;
+    const { source, destination, draggableId } = result;
     console.log(result);
     if (!destination) return;
 
@@ -211,7 +213,14 @@ const DealsKhanBan = () => {
           ? { ...deal, deals: destinationItems }
           : deal
       );
-      setDeals(newDeals);
+      // put request still not working correctly
+      const stage = { stage: destination.droppableId };
+      console.log(draggableId, stage);
+
+      dispatch(editDeal({ draggableId, stage })).then(() => {
+        setDeals(newDeals);
+        // dispatch(fetchDeals());
+      });
     }
 
     // Post request example
