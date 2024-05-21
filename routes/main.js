@@ -123,11 +123,32 @@ router.get("/deals", async (req, res, next) => {
     // fetch companies data from mongoDB
     const deals = await Deal.find();
 
+    // Calculate total amount and count of deals
+    let totalAmount = 0;
+    let dealCount = deals.length;
+    
+    // Iterate over each deal to calculate total amount
+    deals.forEach((deal) => {
+      totalAmount += parseFloat(deal.amount);
+    });  
+
+    // Calculate the average amount
+    const averageDealAmount = totalAmount / dealCount;
+
+    // Round the average deal amount to two decimal points
+    const roundedAverageDealAmount = averageDealAmount.toLocaleString(undefined, { minimumFractionDigits: 2 });
+
+    // Create an object containing both deals and averageDealAmount
+    const responseData = {
+      deals: deals,
+      averageDealAmount: roundedAverageDealAmount
+    };
+
     // message if no companies available
     if (!deals) {
       return res.status(404).json({ message: "No deals yet!" });
     }
-    res.json(deals);
+    res.json(responseData);
   } catch (err) {
     next(err);
   }

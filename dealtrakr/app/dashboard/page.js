@@ -7,6 +7,7 @@ import AddCompanyButton from "../components/AddCompanyButton";
 import CompaniesListView from "../components/CompaniesListView";
 import Link from "next/link";
 import DealsListView from "../components/DealsListView";
+import DashboardView from "../components/DashboardView";
 
 export default function Dashboard() {
   return (
@@ -20,7 +21,7 @@ export default function Dashboard() {
           <DealsListView />
         </Tab>
         <Tab eventKey="dashboard" title="Dashboard" className="tabsClass">
-          Tab content for Dashboard
+          <DashboardView />
         </Tab>
       </Tabs>
     </main>

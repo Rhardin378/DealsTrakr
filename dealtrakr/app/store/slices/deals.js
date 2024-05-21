@@ -31,6 +31,7 @@ export const dealsSlice = createSlice({
   name: "deals",
   initialState: {
     dealsToShow: [],
+    averageDealAmount: 0,
     dealsCount: 0,
     status: "idle",
     error: null,
@@ -43,8 +44,8 @@ export const dealsSlice = createSlice({
       })
       .addCase(fetchDeals.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.dealsToShow = action.payload;
-        // state.count = action.payload.count;
+        state.dealsToShow = action.payload.deals;
+        state.averageDealAmount = action.payload.averageDealAmount;
       })
       .addCase(fetchDeals.rejected, (state, action) => {
         state.status = "failed";

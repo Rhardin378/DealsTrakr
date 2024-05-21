@@ -166,7 +166,7 @@ const EditDealsForm = () => {
             onClick={handleEditDealSubmit}
             type="button"
           >
-            Edit Deal
+            Save
           </Button>
         </Modal.Footer>
       </Modal>
