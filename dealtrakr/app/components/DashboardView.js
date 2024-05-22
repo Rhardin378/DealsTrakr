@@ -1,6 +1,7 @@
 // DashboardView.js
 import React, { useEffect, useState } from 'react';
 import { fetchDashboardDealData } from '../components/FetchDashboardDealData';
+import { PieChart } from 'react-minimal-pie-chart';
 
 const DashboardView = () => {
   const [averageDealAmount, setAverageDealAmount] = useState(null);
@@ -33,14 +34,34 @@ const DashboardView = () => {
   if (error) {
     return <p>{error}</p>;
   }
+  
+  const closedWonPercentageAsNumber = parseInt(closedWonPercentage, 10);
+  const closedLostPercentageAsNumber = parseInt(closedLostPercentage, 10);
 
   return (
-    <>
-      <p>Dashboard tab content</p>
+    <div>
       <p>Average Deal Amount: ${averageDealAmount}</p>
-      <p>Closed Won Percentage: {closedWonPercentage}%</p>
-      <p>Closed Lost Percentage: {closedLostPercentage}%</p>
-    </>
+
+      {/* https://www.npmjs.com/package/react-minimal-pie-chart */}
+      <PieChart className='pie-chart'
+        data={[
+          { title: 'Closed Won', value: closedWonPercentageAsNumber, color: '#E38627' },
+          { title: 'Closed Lost', value: closedLostPercentageAsNumber, color: '#C13C37' }
+        ]}
+        radius={40}
+        viewBoxSize={[300, 300]}
+        label={({ dataEntry }) => `${dataEntry.title}: ${dataEntry.value}%`}
+        labelPosition={60}
+        paddingAngle={0}
+        labelStyle={{
+          fontSize: '3.75px',
+          fontFamily: 'sans-serif',
+          fontWeight: 'bold',
+          strokeWidth: '2'
+        }}
+      />
+
+  </div>
   );
 };
 
