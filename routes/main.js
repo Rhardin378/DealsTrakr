@@ -120,34 +120,35 @@ router.delete("/companies/:companyId", async (req, res, next) => {
  */
 router.get("/deals", async (req, res, next) => {
   try {
-    // fetch companies data from mongoDB
+    // fetch deals data from MongoDB
     const deals = await Deal.find();
 
-    // Calculate total amount and count of deals
-    let totalAmount = 0;
-    let dealCount = deals.length;
-    
-    // Iterate over each deal to calculate total amount
-    deals.forEach((deal) => {
-      totalAmount += parseFloat(deal.amount);
-    });  
-
-    // Calculate the average amount
-    const averageDealAmount = totalAmount / dealCount;
-
-    // Round the average deal amount to two decimal points
-    const roundedAverageDealAmount = averageDealAmount.toLocaleString(undefined, { minimumFractionDigits: 2 });
-
-    // Create an object containing both deals and averageDealAmount
-    const responseData = {
-      deals: deals,
-      averageDealAmount: roundedAverageDealAmount
-    };
-
-    // message if no companies available
-    if (!deals) {
+    // Check if there are no deals
+    if (!deals.length) {
       return res.status(404).json({ message: "No deals yet!" });
     }
+
+    // Calculate total amount and average deal amount
+    const totalAmount = deals.reduce((sum, deal) => sum + parseFloat(deal.amount), 0);
+    const averageDealAmount = (totalAmount / deals.length).toLocaleString(undefined, { minimumFractionDigits: 2 });
+
+    // Calculate the total count of Closed Won and Closed Lost deals
+    const closedWonCount = deals.filter(deal => deal.stage.toLowerCase() === "closed won").length;
+    const closedLostCount = deals.filter(deal => deal.stage.toLowerCase() === "closed lost").length;
+    const totalClosedDeals = closedWonCount + closedLostCount;
+
+    // Calculate the individual percentages of Closed Won and Closed Lost deals
+    const closedWonPercentage = totalClosedDeals > 0 ? ((closedWonCount / totalClosedDeals) * 100).toFixed(2) : 0;
+    const closedLostPercentage = totalClosedDeals > 0 ? ((closedLostCount / totalClosedDeals) * 100).toFixed(2) : 0;
+
+    // Create response data object
+    const responseData = {
+      deals: deals,
+      averageDealAmount: averageDealAmount,
+      closedWonPercentage: closedWonPercentage,
+      closedLostPercentage: closedLostPercentage
+    };
+
     res.json(responseData);
   } catch (err) {
     next(err);
