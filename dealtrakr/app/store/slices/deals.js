@@ -17,12 +17,15 @@ export const editDeal = createAsyncThunk(
   "editDeal/editDeal",
   async ({ dealId, dealData }) => {
     try {
+      console.log(dealId);
+      console.log(dealData);
       const response = await axios.put(
         `http://localhost:8000/deals/${dealId}`,
         dealData
       );
       return response.data;
     } catch (error) {
+      console.log(error.message);
       throw error;
     }
   }

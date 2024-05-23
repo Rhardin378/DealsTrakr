@@ -132,11 +132,11 @@ const EditDealsForm = () => {
                   value={stage}
                   onChange={handleStage}
                 >
-                  <option value="Initiated">Initiated</option>
-                  <option value="Qualified">Qualified</option>
-                  <option value="Contract Sent">Contract Sent</option>
-                  <option value="Closed Won">Closed Won</option>
-                  <option value="Closed Lost">Closed Lost</option>
+                  <option value="initiated">Initiated</option>
+                  <option value="qualified">Qualified</option>
+                  <option value="contract_sent">Contract Sent</option>
+                  <option value="closed_won">Closed Won</option>
+                  <option value="closed_lost">Closed Lost</option>
                 </select>
               </label>
               <label className="form-label mb-2">

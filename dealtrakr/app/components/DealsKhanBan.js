@@ -96,7 +96,9 @@ const DATA = [
 const DealsKhanBan = () => {
   const [stores, setStores] = useState(DATA);
   const [deals, setDeals] = useState([]);
-
+  const [updatedDeal, setUpdatedDeal] = useState({});
+  const [categoryToUpdate, setCategoryToUpdate] = useState("");
+  const [idOfDealToUpdate, setIdOfDealToUpdate] = useState("");
   const dealData = useSelector((state) => state.deals.dealsToShow);
   const status = useSelector((state) => state.deals.status);
   const error = useSelector((state) => state.deals.error);
@@ -149,20 +151,20 @@ const DealsKhanBan = () => {
 
   useEffect(() => {
     if (status === "succeeded") {
-      let initiated = dealData.filter((deal) => deal.stage == "Initiated");
+      let initiated = dealData.filter((deal) => deal.stage == "initiated");
       console.log(initiated);
-      let qualified = dealData.filter((deal) => deal.stage == "Qualified");
+      let qualified = dealData.filter((deal) => deal.stage == "qualified");
       console.log(qualified);
 
       let contractSent = dealData.filter(
-        (deal) => deal.stage == "Contract Sent"
+        (deal) => deal.stage == "contract_sent"
       );
       console.log(contractSent);
 
-      let closedWon = dealData.filter((deal) => deal.stage == "Closed Won");
+      let closedWon = dealData.filter((deal) => deal.stage == "closed_won");
       console.log(closedWon);
 
-      let closedLost = dealData.filter((deal) => deal.stage == "Closed Lost");
+      let closedLost = dealData.filter((deal) => deal.stage == "closed_lost");
       console.log(closedLost);
 
       formatDealData(initiated, qualified, contractSent, closedWon, closedLost);
@@ -180,6 +182,7 @@ const DealsKhanBan = () => {
   const handleDragAndDrop = (result) => {
     const { source, destination, draggableId } = result;
     console.log(result);
+
     if (!destination) return;
 
     if (
@@ -196,9 +199,10 @@ const DealsKhanBan = () => {
 
     const sourceItems = Array.from(sourceStage.deals);
     const [movedItem] = sourceItems.splice(source.index, 1);
-
+    console.log(movedItem._id);
     if (source.droppableId === destination.droppableId) {
       sourceItems.splice(destination.index, 0, movedItem);
+
       const newDeals = deals.map((deal) =>
         deal.id === source.droppableId ? { ...deal, deals: sourceItems } : deal
       );
@@ -213,24 +217,38 @@ const DealsKhanBan = () => {
           ? { ...deal, deals: destinationItems }
           : deal
       );
+      setCategoryToUpdate(destination.droppableId);
+
+      setDeals(newDeals);
       // put request still not working correctly
+      let dealupdatedDeal = dealData.find((deal) => deal._id === draggableId);
+      console.log(dealupdatedDeal);
+      // updatedDeal.stage = destination.droppableId;
+      setUpdatedDeal({ ...dealupdatedDeal, stage: destination.droppableId });
+
       const stage = { stage: destination.droppableId };
       console.log(draggableId, stage);
+      console.log(updatedDeal);
 
-      dispatch(editDeal({ draggableId, stage })).then(() => {
-        setDeals(newDeals);
-        // dispatch(fetchDeals());
-      });
+      // .then(() => {
+      // //   setDeals(newDeals);
+      //   // dispatch(fetchDeals());
+      // });
     }
-
-    // Post request example
-    // fetch("/api/update-deal-stage", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ id: movedItem.id, stage: destination.droppableId }),
-    // });
+  };
+  const checkIfMoved = (deal) => {
+    if (deal._id !== updatedDeal._id) {
+      console.log("cant do that");
+      return;
+    } else {
+      dispatch(
+        editDeal({
+          dealId: deal._id,
+          dealData: updatedDeal,
+        })
+      ).then((deals) => dispatch(fetchDeals()));
+      setUpdatedDeal({});
+    }
   };
 
   return (
@@ -261,6 +279,9 @@ const DealsKhanBan = () => {
                             {...provided.dragHandleProps}
                           >
                             {deal.name}
+                            <button onClick={() => checkIfMoved(deal)}>
+                              set stage
+                            </button>
                           </div>
                         )}
                       </Draggable>
