@@ -57,7 +57,7 @@ const DashboardView = () => {
           fontSize: '3.75px',
           fontFamily: 'sans-serif',
           fontWeight: 'bold',
-          strokeWidth: '2'
+          strokeWidth: '1'
         }}
       />
 
