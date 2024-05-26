@@ -120,33 +120,37 @@ router.delete("/companies/:companyId", async (req, res, next) => {
  */
 router.get("/deals", async (req, res, next) => {
   try {
-    // fetch deals data from MongoDB
     const deals = await Deal.find();
 
-    // Check if there are no deals
     if (!deals.length) {
       return res.status(404).json({ message: "No deals yet!" });
     }
 
-    // Calculate total amount and average deal amount
     const totalAmount = deals.reduce((sum, deal) => sum + parseFloat(deal.amount), 0);
     const averageDealAmount = (totalAmount / deals.length).toLocaleString(undefined, { minimumFractionDigits: 2 });
 
-    // Calculate the total count of Closed Won and Closed Lost deals
-    const closedWonCount = deals.filter(deal => deal.stage.toLowerCase() === "closed won").length;
-    const closedLostCount = deals.filter(deal => deal.stage.toLowerCase() === "closed lost").length;
-    const totalClosedDeals = closedWonCount + closedLostCount;
+    const closedWonDeals = deals.filter(deal => deal.stage.toLowerCase() === "closed_won" || "Closed Won");
+    const closedLostCount = deals.filter(deal => deal.stage.toLowerCase() === "closed_lost" || "Closed Lost").length;
+    const totalClosedDeals = closedWonDeals.length + closedLostCount;
 
-    // Calculate the individual percentages of Closed Won and Closed Lost deals
-    const closedWonPercentage = totalClosedDeals > 0 ? ((closedWonCount / totalClosedDeals) * 100).toFixed(2) : 0;
+    const closedWonPercentage = totalClosedDeals > 0 ? ((closedWonDeals.length / totalClosedDeals) * 100).toFixed(2) : 0;
     const closedLostPercentage = totalClosedDeals > 0 ? ((closedLostCount / totalClosedDeals) * 100).toFixed(2) : 0;
 
-    // Create response data object
+    const totalDaysToClose = closedWonDeals.reduce((sum, deal) => {
+      const initiatedDate = new Date(deal.dateInitiated);
+      const closedDate = new Date(deal.dateClosed);
+      const timeDifference = (closedDate - initiatedDate) / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+      return sum + timeDifference;
+    }, 0);
+
+    const averageTimeToClose = closedWonDeals.length > 0 ? (totalDaysToClose / closedWonDeals.length).toFixed(2) : 0;
+
     const responseData = {
       deals: deals,
       averageDealAmount: averageDealAmount,
       closedWonPercentage: closedWonPercentage,
-      closedLostPercentage: closedLostPercentage
+      closedLostPercentage: closedLostPercentage,
+      averageTimeToClose: averageTimeToClose
     };
 
     res.json(responseData);
@@ -154,6 +158,8 @@ router.get("/deals", async (req, res, next) => {
     next(err);
   }
 });
+
+
 
 router.get("/deals/:dealId", async (req, res, next) => {
   //fetch deal
