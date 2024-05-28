@@ -13,6 +13,7 @@ export const fetchDeals = createAsyncThunk("deals/fetchDeals", async () => {
     throw error;
   }
 });
+
 export const editDeal = createAsyncThunk(
   "editDeal/editDeal",
   async ({ dealId, dealData }) => {
@@ -30,12 +31,14 @@ export const editDeal = createAsyncThunk(
     }
   }
 );
+
 export const dealsSlice = createSlice({
   name: "deals",
   initialState: {
     dealsToShow: [],
     averageDealAmount: 0,
     dealsCount: 0,
+    averageTimeToClose: 0,
     status: "idle",
     error: null,
   },
@@ -49,6 +52,7 @@ export const dealsSlice = createSlice({
         state.status = "succeeded";
         state.dealsToShow = action.payload.deals;
         state.averageDealAmount = action.payload.averageDealAmount;
+        state.averageTimeToClose = action.payload.averageTimeToClose;
       })
       .addCase(fetchDeals.rejected, (state, action) => {
         state.status = "failed";
@@ -66,4 +70,5 @@ export const dealsSlice = createSlice({
       });
   },
 });
+
 export default dealsSlice.reducer;

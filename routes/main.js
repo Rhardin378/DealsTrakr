@@ -115,44 +115,63 @@ router.delete("/companies/:companyId", async (req, res, next) => {
   }
 });
 
-/**
- * GET deals route
- */
 router.get("/deals", async (req, res, next) => {
   try {
-    // fetch companies data from mongoDB
     const deals = await Deal.find();
 
-    // Calculate total amount and count of deals
-    let totalAmount = 0;
-    let dealCount = deals.length;
-    
-    // Iterate over each deal to calculate total amount
-    deals.forEach((deal) => {
-      totalAmount += parseFloat(deal.amount);
-    });  
-
-    // Calculate the average amount
-    const averageDealAmount = totalAmount / dealCount;
-
-    // Round the average deal amount to two decimal points
-    const roundedAverageDealAmount = averageDealAmount.toLocaleString(undefined, { minimumFractionDigits: 2 });
-
-    // Create an object containing both deals and averageDealAmount
-    const responseData = {
-      deals: deals,
-      averageDealAmount: roundedAverageDealAmount
-    };
-
-    // message if no companies available
-    if (!deals) {
+    if (!deals.length) {
       return res.status(404).json({ message: "No deals yet!" });
     }
+
+    const totalAmount = deals.reduce((sum, deal) => sum + parseFloat(deal.amount), 0);
+    const averageDealAmount = (totalAmount / deals.length).toLocaleString(undefined, { minimumFractionDigits: 2 });
+
+    const closedWonDeals = deals.filter(deal => deal.stage.toLowerCase() === "closed_won" || deal.stage.toLowerCase() === "closed won");
+    const closedLostCount = deals.filter(deal => deal.stage.toLowerCase() === "closed_lost" || deal.stage.toLowerCase() === "closed lost").length;
+    const totalClosedDeals = closedWonDeals.length + closedLostCount;
+
+    const closedWonPercentage = totalClosedDeals > 0 ? ((closedWonDeals.length / totalClosedDeals) * 100).toFixed(2) : 0;
+    const closedLostPercentage = totalClosedDeals > 0 ? ((closedLostCount / totalClosedDeals) * 100).toFixed(2) : 0;
+
+    const totalDaysToClose = closedWonDeals.reduce((sum, deal) => {
+      const initiatedDate = new Date(deal.dateInitiated);
+      const closedDate = new Date(deal.dateClosed);
+      const timeDifference = (closedDate - initiatedDate) / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+      return sum + timeDifference;
+    }, 0);
+
+    const averageTimeToClose = closedWonDeals.length > 0 ? (totalDaysToClose / closedWonDeals.length).toFixed(2) : 0;
+
+    // Calculate average number of deals by date
+    const dealsByDate = {};
+    deals.forEach(deal => {
+      const date = new Date(deal.dateInitiated).toISOString().split('T')[0]; // Get only the date part
+      dealsByDate[date] = (dealsByDate[date] || 0) + 1;
+    });
+
+    const dates = Object.keys(dealsByDate);
+    const dealsCount = Object.values(dealsByDate);
+    const averageDealsByDate = dealsCount.length > 0 ? (dealsCount.reduce((sum, count) => sum + count, 0) / dealsCount.length).toFixed(2) : 0;
+
+    const responseData = {
+      deals: deals,
+      averageDealAmount: averageDealAmount,
+      closedWonPercentage: closedWonPercentage,
+      closedLostPercentage: closedLostPercentage,
+      averageTimeToClose: averageTimeToClose,
+      averageDealsByDate: averageDealsByDate,
+      dealsByDate: dealsByDate,
+    };
+
     res.json(responseData);
   } catch (err) {
     next(err);
   }
 });
+
+
+
+
 
 router.get("/deals/:dealId", async (req, res, next) => {
   //fetch deal
