@@ -115,9 +115,6 @@ router.delete("/companies/:companyId", async (req, res, next) => {
   }
 });
 
-/**
- * GET deals route
- */
 router.get("/deals", async (req, res, next) => {
   try {
     const deals = await Deal.find();
@@ -129,8 +126,8 @@ router.get("/deals", async (req, res, next) => {
     const totalAmount = deals.reduce((sum, deal) => sum + parseFloat(deal.amount), 0);
     const averageDealAmount = (totalAmount / deals.length).toLocaleString(undefined, { minimumFractionDigits: 2 });
 
-    const closedWonDeals = deals.filter(deal => deal.stage.toLowerCase() === "closed_won" || "Closed Won");
-    const closedLostCount = deals.filter(deal => deal.stage.toLowerCase() === "closed_lost" || "Closed Lost").length;
+    const closedWonDeals = deals.filter(deal => deal.stage.toLowerCase() === "closed_won" || deal.stage.toLowerCase() === "closed won");
+    const closedLostCount = deals.filter(deal => deal.stage.toLowerCase() === "closed_lost" || deal.stage.toLowerCase() === "closed lost").length;
     const totalClosedDeals = closedWonDeals.length + closedLostCount;
 
     const closedWonPercentage = totalClosedDeals > 0 ? ((closedWonDeals.length / totalClosedDeals) * 100).toFixed(2) : 0;
@@ -145,12 +142,27 @@ router.get("/deals", async (req, res, next) => {
 
     const averageTimeToClose = closedWonDeals.length > 0 ? (totalDaysToClose / closedWonDeals.length).toFixed(2) : 0;
 
+    // Calculate average number of deals by date
+    const dealsByDate = {};
+    deals.forEach(deal => {
+      const date = new Date(deal.dateInitiated).toISOString().split('T')[0]; // Get only the date part
+      dealsByDate[date] = (dealsByDate[date] || 0) + 1;
+    });
+
+    const dates = Object.keys(dealsByDate);
+    const dealsCount = Object.values(dealsByDate);
+    const numberOfDates = dates.length;
+    const averageDealsByDate = dealsCount.length > 0 ? (dealsCount.reduce((sum, count) => sum + count, 0) / dealsCount.length).toFixed(2) : 0;
+
     const responseData = {
       deals: deals,
       averageDealAmount: averageDealAmount,
       closedWonPercentage: closedWonPercentage,
       closedLostPercentage: closedLostPercentage,
-      averageTimeToClose: averageTimeToClose
+      averageTimeToClose: averageTimeToClose,
+      averageDealsByDate: averageDealsByDate,
+      dealsByDate: dealsByDate,
+      numberOfDates: numberOfDates
     };
 
     res.json(responseData);
@@ -158,6 +170,8 @@ router.get("/deals", async (req, res, next) => {
     next(err);
   }
 });
+
+
 
 
 
