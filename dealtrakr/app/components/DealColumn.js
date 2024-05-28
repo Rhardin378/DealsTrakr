@@ -32,6 +32,9 @@ const DealColumn = ({ id, name, deals, updateDealIfValidId, isLastColumn }) => {
                       {" "}
                       <span>Close date: {deal.dateClosed}</span>
                     </div>
+                    <div>
+                      <img src={deal.company.imageURL} />
+                    </div>
                     <button onClick={() => updateDealIfValidId(deal)}>
                       set stage
                     </button>
