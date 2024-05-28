@@ -12,89 +12,10 @@
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { fetchDeals, editDeal } from "../store/slices/deals";
+import DealColumn from "./DealColumn";
 import { useDispatch, useSelector } from "react-redux";
 
-// let deals = [
-//   {
-//     id: "initiated",
-//     name: "Initiated",
-//     deals: [...initiatedDeals],
-//   },
-//   {
-//     id: "qualified",
-//     name: "qualified",
-//     deals: [...qualifiedDeals],
-//   },
-//   {
-//     id: "contract_sent",
-//     name: "Contract Sent",
-//     deals: [...contractSentDeals],
-//   },
-//   {
-//     id: "closed_won",
-//     name: "Closed Won",
-//     deals: [...closedWonDeals],
-//   },
-//   {
-//     id: "closed_lost",
-//     name: "Closed Lost",
-//     deals: [...closedLostDeals],
-//   },
-// ];
-
-// structure data imported from store
-const DATA = [
-  {
-    // id has to be stage name so that i can use the the  destination to make a put request using the "id"
-    id: "initiated",
-    name: "Initiated",
-    //deals
-    items: [
-      //deal
-      //sourceDraggableId will be passed into our editDealSlice (id, droppableID)
-      { id: "26fd50b3-3841-496e-8b32-73636f6f4197", name: "3% Milk" },
-      { id: "b0ee9d50-d0a6-46f8-96e3-7f3f0f9a2525", name: "Butter" },
-    ],
-  },
-  {
-    id: "qualified",
-    name: "Qualified",
-    items: [
-      {
-        id: "95ee6a5d-f927-4579-8c15-2b4eb86210ae",
-        name: "Designing Data Intensive Applications",
-      },
-      { id: "5bee94eb-6bde-4411-b438-1c37fa6af364", name: "Atomic Habits" },
-    ],
-  },
-  {
-    id: "contract_sent",
-    name: "Contract Sent",
-    items: [
-      { id: "960cbbcf-89a0-4d79-aa8e-56abbc15eacc", name: "Workbench" },
-      { id: "d3edf796-6449-4931-a777-ff66965a025b", name: "Hammer" },
-    ],
-  },
-  {
-    id: "closed_won",
-    name: "Closed Won",
-    items: [
-      { id: "960cbbcf-89a0-4d79-aa8e-56abbc15eafc", name: "Nike" },
-      { id: "d3edf796-6449-4931-a777-ff66965a024b", name: "espn" },
-    ],
-  },
-  {
-    id: "closed_lost",
-    name: "Closed Lost",
-    items: [
-      { id: "960cbbcf-89a0-4d79-aa8e-56abbc15eafq", name: "Pals" },
-      { id: "d3edf796-6449-4931-a777-ff66965a024z", name: "Burger mart" },
-    ],
-  },
-];
-
 const DealsKhanBan = () => {
-  const [stores, setStores] = useState(DATA);
   const [deals, setDeals] = useState([]);
   const [updatedDeal, setUpdatedDeal] = useState({});
   const [categoryToUpdate, setCategoryToUpdate] = useState("");
@@ -236,7 +157,7 @@ const DealsKhanBan = () => {
       // });
     }
   };
-  const checkIfMoved = (deal) => {
+  const updateDealIfValidId = (deal) => {
     if (deal._id !== updatedDeal._id) {
       console.log("cant do that");
       return;
@@ -256,41 +177,19 @@ const DealsKhanBan = () => {
       <div className="card">
         <DragDropContext onDragEnd={handleDragAndDrop}>
           <div className="columns">
-            {deals.map((deal, index) => (
-              <Droppable droppableId={deal.id} key={deal.id}>
-                {(provided) => (
-                  <div
-                    className="store"
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    <h3>{deal.name}</h3>
-                    {deal.deals.map((deal, index) => (
-                      <Draggable
-                        key={deal._id}
-                        draggableId={deal._id}
-                        index={index}
-                      >
-                        {(provided) => (
-                          <div
-                            className="item"
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                          >
-                            {deal.name}
-                            <button onClick={() => checkIfMoved(deal)}>
-                              set stage
-                            </button>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            ))}
+            {deals.map((deal, index) => {
+              const isLastColumn = index === deals.length - 1;
+              return (
+                <DealColumn
+                  key={deal.id}
+                  id={deal.id}
+                  name={deal.name}
+                  deals={deal.deals}
+                  updateDealIfValidId={updateDealIfValidId}
+                  isLastColumn={isLastColumn}
+                />
+              );
+            })}
           </div>
         </DragDropContext>
       </div>

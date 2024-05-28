@@ -43,25 +43,25 @@ const DealsListView = () => {
   });
 
   return (
-    <div className="container dealsForm">
-      <div className="formActions">
-        <DealSearch />
-        <AddDealForm />
-      </div>
-      <table className="table table-light table-striped">
-        <thead>
-          <tr>
-            <th>Deal Name</th>
-            <th>Deal Amount</th>
-            <th>Close Date</th>
-          </tr>
-        </thead>
-        <tbody>{renderDeals}</tbody>
-      </table>
-      <div>
-        <DealsKhanBan />
-      </div>
+    // <div className="container dealsForm">
+    //   <div className="formActions">
+    //     <DealSearch />
+    //     <AddDealForm />
+    //   </div>
+    //   <table className="table table-light table-striped">
+    //     <thead>
+    //       <tr>
+    //         <th>Deal Name</th>
+    //         <th>Deal Amount</th>
+    //         <th>Close Date</th>
+    //       </tr>
+    //     </thead>
+    //     <tbody>{renderDeals}</tbody>
+    //   </table>
+    <div className="dealsForm">
+      <DealsKhanBan />
     </div>
+    // </div>
   );
 };
 

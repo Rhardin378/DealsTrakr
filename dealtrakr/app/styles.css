@@ -257,11 +257,22 @@ table {
 .columns {
   display: flex;
   flex-direction: row;
-  gap: 30px;
+  /* gap: 30px; */
   min-height: 400px;
 }
 .store {
   border-right: solid;
   border-width: 2px;
-  padding: 10px;
+  padding: 30px;
+}
+.last-column {
+  border-right: none;
+}
+
+.item {
+  background-color: #f5f5f5; /* Choose one of the colors from above */
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
