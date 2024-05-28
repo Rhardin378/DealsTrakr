@@ -11,7 +11,6 @@ const DashboardView = () => {
   const [averageTimeToClose, setAverageTimeToClose] = useState(null);
   const [averageDealsByDate, setAverageDealsByDate] = useState(null);
   const [dealsByDate, setDealsByDate] = useState([]);
-  const [numberOfDates, setNumberOfDates] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -25,8 +24,6 @@ const DashboardView = () => {
         setAverageTimeToClose(data.averageTimeToClose);
         setAverageDealsByDate(data.averageDealsByDate);
         setDealsByDate(Object.values(data.dealsByDate));
-        setNumberOfDates(data.numberOfDates);
-        console.log(data)
       } catch (error) {
         setError('Error fetching the average deal amount.');
       } finally {

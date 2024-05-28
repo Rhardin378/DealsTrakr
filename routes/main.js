@@ -151,7 +151,6 @@ router.get("/deals", async (req, res, next) => {
 
     const dates = Object.keys(dealsByDate);
     const dealsCount = Object.values(dealsByDate);
-    const numberOfDates = dates.length;
     const averageDealsByDate = dealsCount.length > 0 ? (dealsCount.reduce((sum, count) => sum + count, 0) / dealsCount.length).toFixed(2) : 0;
 
     const responseData = {
@@ -162,7 +161,6 @@ router.get("/deals", async (req, res, next) => {
       averageTimeToClose: averageTimeToClose,
       averageDealsByDate: averageDealsByDate,
       dealsByDate: dealsByDate,
-      numberOfDates: numberOfDates
     };
 
     res.json(responseData);
