@@ -126,20 +126,19 @@ router.delete("/companies/:companyId", async (req, res, next) => {
 router.get("/deals", async (req, res, next) => {
   try {
     const deals = await Deal.find().populate("company");
-    // populate("company")
 
     if (!deals.length) {
       return res.status(404).json({ message: "No deals yet!" });
     }
 
-    const totalAmount = deals.reduce(
-      (sum, deal) => sum + parseFloat(deal.amount),
-      0
-    );
-    const averageDealAmount = (totalAmount / deals.length).toLocaleString(
-      undefined,
-      { minimumFractionDigits: 2 }
-    );
+    // Calculate total earnings by summing up all deal amounts
+    const totalEarnings = deals.reduce((sum, deal) => sum + parseFloat(deal.amount), 0);
+
+    // Format total earnings to have two decimal points
+    const formattedTotalEarnings = totalEarnings.toFixed(2);
+
+    const totalAmount = totalEarnings;
+    const averageDealAmount = (totalAmount / deals.length).toLocaleString(undefined, { minimumFractionDigits: 2 });
 
     const closedWonDeals = deals.filter(
       (deal) =>
@@ -182,7 +181,6 @@ router.get("/deals", async (req, res, next) => {
       dealsByDate[date] = (dealsByDate[date] || 0) + 1;
     });
 
-    const dates = Object.keys(dealsByDate);
     const dealsCount = Object.values(dealsByDate);
     const averageDealsByDate =
       dealsCount.length > 0
@@ -194,6 +192,7 @@ router.get("/deals", async (req, res, next) => {
 
     const responseData = {
       deals: deals,
+      totalEarnings: formattedTotalEarnings, // Use the formatted total earnings here
       averageDealAmount: averageDealAmount,
       closedWonPercentage: closedWonPercentage,
       closedLostPercentage: closedLostPercentage,
@@ -207,6 +206,8 @@ router.get("/deals", async (req, res, next) => {
     next(err);
   }
 });
+
+
 
 router.get("/deals/:dealId", async (req, res, next) => {
   //fetch deal
