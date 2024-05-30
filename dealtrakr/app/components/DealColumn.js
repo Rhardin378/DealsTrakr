@@ -12,37 +12,45 @@ const DealColumn = ({ id, name, deals, updateDealIfValidId, isLastColumn }) => {
           {...provided.droppableProps}
           ref={provided.innerRef}
         >
-          <div></div>
-          <h3>{name}</h3>
-          {deals.map((deal, index) => (
-            <Draggable key={deal._id} draggableId={deal._id} index={index}>
-              {(provided) => (
-                <div
-                  className="item"
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                >
-                  <div>
-                    <Link href={`/deals/${deal._id}`}>{deal.name}</Link>
+          <div>
+            <h3>{name}</h3>
+          </div>
+          <div className="center">
+            {deals.map((deal, index) => (
+              <Draggable key={deal._id} draggableId={deal._id} index={index}>
+                {(provided) => (
+                  <div
+                    className="item card-container"
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
+                    <Link href={`/deals/${deal._id}`}>
+                      <h2 className="deal-name">{deal.name}</h2>
+                    </Link>
+
+                    <span>Amount: ${deal.amount}</span>
+
                     <div>
-                      <span>Amount: ${deal.amount}</span>
-                    </div>
-                    <div>
-                      {" "}
                       <span>Close date: {deal.dateClosed}</span>
                     </div>
                     <div>
                       <img src={deal.company.imageURL} />
                     </div>
-                    <button onClick={() => updateDealIfValidId(deal)}>
-                      set stage
-                    </button>
+                    <div>
+                      <button
+                        className="set-stage"
+                        onClick={() => updateDealIfValidId(deal)}
+                      >
+                        set stage
+                      </button>
+                    </div>
                   </div>
-                </div>
-              )}
-            </Draggable>
-          ))}
+                )}
+              </Draggable>
+            ))}
+          </div>
+
           {provided.placeholder}
         </div>
       )}

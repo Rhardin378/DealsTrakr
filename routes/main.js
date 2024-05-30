@@ -1,7 +1,15 @@
 const router = require("express").Router();
 const Company = require("../models/Company");
-const Deal = require("../models/Deal");
+const { Deal } = require("../models/Deal");
 const User = require("../models/User");
+const passport = require("passport");
+const Authentication = require("../controllers/authentication");
+const requireAuth = passport.authenticate("jwt", { session: false });
+const requireSignin = passport.authenticate("local", { session: false });
+
+router.post("/auth/signin", requireSignin, Authentication.signin);
+router.post("/auth/signup", Authentication.signup);
+router.get("/auth/current_user", requireAuth, Authentication.currentUser);
 
 /**
  * GET companies route

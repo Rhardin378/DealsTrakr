@@ -1,12 +1,17 @@
-'use client'
+"use client";
 import React, { useState } from "react";
+import { signup, signin } from "../store/slices/authSlice";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const router = useRouter();
-  const [username, setUsername] = useState("");
+  const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  
+  const dispatch = useDispatch();
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -17,12 +22,15 @@ const Login = () => {
   };
 
   const handleSignIn = () => {
-    if (username === "HBO_Admin" && password === "hbomax") {
-      // If username and password match, navigate to dashboard
-      router.push("/dashboard");
-    } else {
-      setError("Invalid username or password");
-    }
+    const user = { email, password };
+    // if (username === "HBO_Admin" && password === "hbomax") {
+    //   // If username and password match, navigate to dashboard
+    //   router.push("/dashboard");
+    // } else {
+    //   setError("Invalid username or password");
+    // }
+    dispatch(signin(user));
+    router.push("/dashboard");
   };
 
   return (
@@ -33,11 +41,11 @@ const Login = () => {
             <div className="card-body">
               <h2 className="text-center mb-4">Login</h2>
               <div className="form-group">
-                <label>Username:</label>
+                <label>Email:</label>
                 <input
                   type="text"
                   className="form-control"
-                  value={username}
+                  value={email}
                   onChange={handleUsernameChange}
                 />
               </div>
@@ -50,7 +58,12 @@ const Login = () => {
                   onChange={handlePasswordChange}
                 />
               </div>
-              <button onClick={handleSignIn} className="btn btn-primary btn-block">Sign In</button>
+              <button
+                onClick={handleSignIn}
+                className="btn btn-primary btn-block"
+              >
+                Sign In
+              </button>
               {error && <div className="text-danger mt-3">{error}</div>}
             </div>
           </div>
