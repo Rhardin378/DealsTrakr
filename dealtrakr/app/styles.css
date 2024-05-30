@@ -361,7 +361,7 @@ table {
 
 .pie-chart {
   width: 100%;
-  max-width: 300px; /* Added max-width to prevent the chart from becoming too wide */
+  max-width: 400px; /* Added max-width to prevent the chart from becoming too wide */
 }
 
 .sparklines-container {
