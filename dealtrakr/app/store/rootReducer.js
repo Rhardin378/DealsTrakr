@@ -10,6 +10,7 @@ import deleteDealReducer from "../store/slices/deleteDealSlice";
 import editCompanyReducer, {
   editCompany,
 } from "../store/slices/editCompanySlice";
+import authReducer from "../store/slices/authSlice";
 
 const rootReducer = combineReducers({
   companies: companiesReducer,
@@ -21,7 +22,7 @@ const rootReducer = combineReducers({
   dealDetails: dealDetailsReducer,
   deleteDeal: deleteDealReducer,
   editCompany: editCompanyReducer,
-  // auth: authReducer
+  auth: authReducer,
 });
 
 export default rootReducer;

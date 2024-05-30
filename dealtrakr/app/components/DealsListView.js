@@ -45,11 +45,11 @@ const DealsListView = () => {
   return (
     <div className=" dealsForm">
       {/* container class was removed  */}
-      {/* <div className="formActions">
+      <div className="formActions">
         <DealSearch />
         <AddDealForm />
       </div>
-      <table className="table table-light table-striped">
+      {/* <table className="table table-light table-striped">
         <thead>
           <tr>
             <th>Deal Name</th>
@@ -58,8 +58,8 @@ const DealsListView = () => {
           </tr>
         </thead>
         <tbody>{renderDeals}</tbody>
-      </table> */}
-      <div className="dealsForm">
+      </table>  */}
+      <div className="">
         <DealsKhanBan />
       </div>
     </div>
