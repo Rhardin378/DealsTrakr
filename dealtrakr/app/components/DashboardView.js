@@ -80,11 +80,11 @@ const DashboardView = () => {
     labels: Object.keys(revenueByMonth),
     datasets: [
       {
-        label: '= Monthly Revenue',
+        label: 'Revenue',
         data: Object.values(revenueByMonth),
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        backgroundColor: 'rgba(75, 192, 192, 0.4)',
         borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
+        borderWidth: .8,
       },
     ],
   };
@@ -95,9 +95,6 @@ const DashboardView = () => {
       legend: {
         position: 'top',
         align: 'end',
-        padding: {
-          bottom: 10
-        }
       },
     },
     scales: {
