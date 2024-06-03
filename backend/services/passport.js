@@ -1,6 +1,8 @@
 const passport = require("passport");
 const User = require("../models/User");
 require("dotenv").config();
+require('dotenv').config();
+console.log('TOKEN_SECRET:', process.env.TOKEN_SECRET); // Add this line for debugging
 const secret = process.env.TOKEN_SECRET;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 

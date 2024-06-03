@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { fetchDashboardDealData } from '../components/FetchDashboardDealData';
 import { PieChart } from 'react-minimal-pie-chart';
-import { Sparklines, SparklinesBars } from 'react-sparklines';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 import '../../app/styles.css';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const DashboardView = () => {
   const [averageDealAmount, setAverageDealAmount] = useState(null);
@@ -12,6 +23,7 @@ const DashboardView = () => {
   const [averageDealsByDate, setAverageDealsByDate] = useState(null);
   const [dealsByDate, setDealsByDate] = useState([]);
   const [totalEarnings, setTotalEarnings] = useState(null);
+  const [revenueByMonth, setRevenueByMonth] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -26,6 +38,23 @@ const DashboardView = () => {
         setAverageDealsByDate(data.averageDealsByDate);
         setTotalEarnings(data.totalEarnings);
         setDealsByDate(Object.values(data.dealsByDate));
+
+        const revenueByMonth = data.deals.reduce((acc, deal) => {
+          const date = new Date(deal.dateClosed);
+          const monthYear = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+          acc[monthYear] = (acc[monthYear] || 0) + parseFloat(deal.amount);
+          return acc;
+        }, {});
+
+        // Sort revenueByMonth by date
+        const sortedRevenueByMonth = Object.entries(revenueByMonth)
+          .sort((a, b) => new Date(a[0]) - new Date(b[0]))
+          .reduce((acc, [key, value]) => {
+            acc[key] = value;
+            return acc;
+          }, {});
+
+        setRevenueByMonth(sortedRevenueByMonth);
       } catch (error) {
         setError('Error fetching the average deal amount.');
       } finally {
@@ -47,20 +76,61 @@ const DashboardView = () => {
   const closedWonPercentageAsNumber = parseInt(closedWonPercentage, 10);
   const closedLostPercentageAsNumber = parseInt(closedLostPercentage, 10);
 
+  const barData = {
+    labels: Object.keys(revenueByMonth),
+    datasets: [
+      {
+        label: '= Monthly Revenue',
+        data: Object.values(revenueByMonth),
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      },
+    ],
+  };
+  
+
+  const barOptions = {
+    plugins: {
+      legend: {
+        position: 'top',
+        align: 'end',
+        padding: {
+          bottom: 10
+        }
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+  
+  const highestRevenueMonth = Object.entries(revenueByMonth)
+  .reduce((prev, [month, revenue]) => {
+    return prev[1] > revenue ? prev : [month, revenue];
+  }, ['', 0]);
+
+  const formattedRevenue = highestRevenueMonth[1].toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+  });
+
   return (
-    <div className="dashboard-container">
-      <div className="chart-container">
-        <div className="dashboard-card">
-          <h5>Total Revenue</h5>
-          <p>${totalEarnings}</p>
-        </div>
-        <div className="dashboard-card">
-          <h5>Average Time to Close</h5>
-          <p>{averageTimeToClose} days</p>
-        </div>
-        <div className="dashboard-card">
-          <h5>Win Percentage</h5>
-          <div className="pie-chart-container">
+  <div className="dashboard-container">
+    <div className="chart-container">
+      <div className="dashboard-card">
+        <h5>Total Revenue</h5>
+        <p>${totalEarnings}</p>
+      </div>
+      <div className="dashboard-card">
+        <h5>Average Time to Close</h5>
+        <p>{averageTimeToClose} days</p>
+      </div>
+      <div className="dashboard-card">
+        <h5>Win Percentage</h5>
+        <div className="pie-chart-container">
+          <div className="chart-with-legend">
             <PieChart
               className="pie-chart"
               data={[
@@ -82,24 +152,27 @@ const DashboardView = () => {
             </div>
           </div>
         </div>
-        <div className="dashboard-card">
-          <div className="bar-graph-container">
-            <h5>Deals by Date Initiated</h5>
-            <div className="sparklines-container">
-              <Sparklines data={dealsByDate} height={100}>
-                <SparklinesBars style={{ fill: "#41c3f9", fillOpacity: "1" }} />
-              </Sparklines>
-            </div>
-            <strong>{averageDealsByDate}</strong> deals per date initiated
+      </div>
+
+      <div className="dashboard-card">
+        <div className="bar-graph-container">
+          <h5>Revenue by Month</h5>
+          <div className="bar-chart-container">
+            <Bar data={barData} options={barOptions} />
           </div>
         </div>
-        <div className="dashboard-card">
-          <h5>Average Deal Amount</h5>
-          <p>${averageDealAmount}</p>
-        </div>
+      </div>
+      <div className="dashboard-card">
+        <h5>Highest Total Month by Revenue</h5>
+        <p>{highestRevenueMonth[0]}: ${formattedRevenue}</p>
+      </div>
+      <div className="dashboard-card">
+        <h5>Average Deal Amount</h5>
+        <p>${averageDealAmount}</p>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default DashboardView;

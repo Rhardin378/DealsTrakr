@@ -314,6 +314,7 @@ table {
   flex-direction: column;
   align-items: center;
 }
+
 .dashboard-container {
   display: flex;
   flex-direction: column;
@@ -323,19 +324,18 @@ table {
 
 .chart-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* Changed to 2 columns */
   gap: 20px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px; /* Increased max-width */
 }
 
 .dashboard-card {
   background-color: white;
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: calc(100% - 20px); /* Adjusted width */
-  max-width: calc(100% - 20px); /* Adjusted max-width */
+  width: 100%; /* Adjusted width */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -359,7 +359,6 @@ table {
   font-weight: bold;
   flex-wrap: wrap;
   gap: 20px;
-
 }
 
 .text-card {
@@ -379,17 +378,23 @@ table {
   margin-top: 20px;
 }
 
+.chart-with-legend {
+  display: flex;
+  align-items: flex-start; /* Align children at the top */
+}
+
 .legend {
   display: flex;
   flex-direction: column;
-  margin-top: 10px; /* Added margin to separate legend from the pie chart */
+  margin-left: 30px;
+  margin-top: 45px;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
   white-space: nowrap;
-  margin-bottom: 5px; /* Reduced margin for better spacing */
+  margin-bottom: 5px;
 }
 
 .legend-color {
@@ -400,9 +405,14 @@ table {
 
 .pie-chart {
   width: 100%;
-  max-width: 400px; /* Added max-width to prevent the chart from becoming too wide */
+  max-width: 400px;
 }
 
-.sparklines-container {
-  padding: 5px 0;
+.bar-chart-container {
+  width: 100%;
+  height: 200px; /* Adjusted height */
+}
+
+.bar-graph-container {
+  margin-top: 30px;
 }
