@@ -6,6 +6,7 @@ import Link from "next/link";
 import Button from "react-bootstrap/Button";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
 import { useRouter } from "next/navigation";
+import {setTab} from "../store/slices/deals";
 
 const DeleteDealButton = ({ dealId }) => {
   const dispatch = useDispatch();
@@ -20,11 +21,14 @@ const DeleteDealButton = ({ dealId }) => {
       dispatch(deleteDeal(dealId));
       dispatch(fetchDeals());
       handleCloseModal();
+      dispatch(setTab("deals"));
       router.push('/dashboard');
     } catch (error) {
       console.error("Error deleting deal:", error);
     }
   };
+
+
 
   return (
     <>

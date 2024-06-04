@@ -6,6 +6,7 @@ import Link from "next/link";
 import DeleteCompanyButton from "./DeleteCompanyButton";
 import Button from "react-bootstrap/Button";
 import EditCompanyForm from "./EditCompanyForm";
+import {setTab} from "../store/slices/deals";
 
 const CompanyDetails = () => {
   const { id } = useParams();
@@ -33,6 +34,10 @@ const CompanyDetails = () => {
     return <div>No company details found</div>;
   }
 
+  const handleDashboardClick = () => {
+    dispatch(setTab("companies"))
+  }
+
   return (
     <div className="company-details">
       <div>
@@ -48,7 +53,7 @@ const CompanyDetails = () => {
       <DeleteCompanyButton companyId={companyDetails._id}/>
       <br/>
       <Link href="/dashboard">
-        <Button className="back-button">Back to Dashboard</Button>
+        <Button className="back-button" onClick={handleDashboardClick}>Back to Dashboard</Button>
       </Link>
       <br/>
       <br/>

@@ -39,10 +39,15 @@ export const dealsSlice = createSlice({
     averageDealAmount: 0,
     dealsCount: 0,
     averageTimeToClose: 0,
+    currentTab: null,
     status: "idle",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    setTab: (state, action) => {
+      state.currentTab = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchDeals.pending, (state) => {
@@ -71,4 +76,5 @@ export const dealsSlice = createSlice({
   },
 });
 
+export const { setTab } = dealsSlice.actions
 export default dealsSlice.reducer;

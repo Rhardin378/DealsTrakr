@@ -106,6 +106,17 @@ img {
   border-color: black; /* Change this to your desired border color for the active tab */
 }
 
+.edit-deal-button,
+.edit-button {
+  margin-right: 10px;
+  padding: 5px;
+  font-weight: bold;
+  color: black;
+  background-color: #ffffff00;
+  border-color: black;
+  margin-top: 5px;
+}
+
 .form-control {
   height: 100%;
 }

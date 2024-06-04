@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDeals } from "../store/slices/deals";
 import { fetchCompanies } from "../store/slices/companies"; // Import the fetchCompanies action creator
 
-const AddDealsForm = () => {
+const AddDealsForm = ({ setActiveTab }) => {
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
@@ -32,24 +32,33 @@ const AddDealsForm = () => {
 
   const handleAddDealSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      addDeal({
-        name,
-        amount,
-        dateClosed,
-        dateInitiated,
-        stage,
-        company: selectedCompany,
+    const newDeal = {
+      name,
+      amount,
+      dateClosed,
+      dateInitiated,
+      stage,
+      company: selectedCompany,
+    };
+
+    console.log("Submitting deal:", newDeal); // Log the deal being submitted
+
+    dispatch(addDeal(newDeal))
+      .then((data) => {
+        console.log("Deal added successfully:", data); // Log successful response
+        dispatch(fetchDeals());
+        setActiveTab("deals"); // Switch to the Deals tab
       })
-    ).then((data) => {
-      dispatch(fetchDeals());
-    });
+      .catch((error) => {
+        console.error("Error adding deal:", error); // Log any errors
+      });
+
     handleClose();
     setName("");
     setAmount("");
     setdateClosed("");
     setDateInitiated("");
-    setStage("");
+    setStage("Initiated");
     setSelectedCompany("");
   };
 

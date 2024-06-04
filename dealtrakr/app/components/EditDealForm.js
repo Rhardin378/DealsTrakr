@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDeals, editDeal } from "../store/slices/deals";
 import { fetchCompanies } from "../store/slices/companies";
 import { fetchDealDetails } from "../store/slices/dealDetailsSlice";
+import { setTab } from "../store/slices/deals";
 
 const EditDealsForm = () => {
   const [show, setShow] = useState(false);
@@ -67,6 +68,7 @@ const EditDealsForm = () => {
     dispatch(editDeal({ dealId, dealData })).then(() => {
       dispatch(fetchDeals());
       handleClose();
+      dispatch(setTab("deals"));
     });
   };
 
