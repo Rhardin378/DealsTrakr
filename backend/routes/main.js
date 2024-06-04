@@ -138,7 +138,9 @@ router.get("/deals", async (req, res, next) => {
     );
 
     // Format total earnings to have two decimal points
-    const formattedTotalEarnings = totalEarnings.toFixed(2);
+    const formattedTotalEarnings = totalEarnings.toLocaleString(
+      undefined,
+      { minimumFractionDigits: 2 });
 
     const totalAmount = totalEarnings;
     const averageDealAmount = (totalAmount / deals.length).toLocaleString(
@@ -196,15 +198,24 @@ router.get("/deals", async (req, res, next) => {
           ).toFixed(2)
         : 0;
 
+    // Calculate monthly revenue
+    const revenueByMonth = {};
+    deals.forEach((deal) => {
+      const date = new Date(deal.dateInitiated);
+      const monthYear = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+      revenueByMonth[monthYear] = (revenueByMonth[monthYear] || 0) + parseFloat(deal.amount);
+    });
+
     const responseData = {
       deals: deals,
-      totalEarnings: formattedTotalEarnings, // Use the formatted total earnings here
+      totalEarnings: formattedTotalEarnings,
       averageDealAmount: averageDealAmount,
       closedWonPercentage: closedWonPercentage,
       closedLostPercentage: closedLostPercentage,
       averageTimeToClose: averageTimeToClose,
       averageDealsByDate: averageDealsByDate,
       dealsByDate: dealsByDate,
+      revenueByMonth: revenueByMonth
     };
 
     res.json(responseData);
