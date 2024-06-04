@@ -189,12 +189,17 @@ table {
 }
 
 .nav-link,
-.nav-item {
+.nav-item,
+.nav-email {
   font-size: 30px;
   color: black;
   font-weight: bold;
   padding-right: 30px;
   text-decoration: none;
+}
+
+.nav-email {
+  align-content: center;
 }
 .nav-item:hover {
   color: white;
@@ -359,7 +364,6 @@ table {
   font-weight: bold;
   flex-wrap: wrap;
   gap: 20px;
-
 }
 
 .text-card {
