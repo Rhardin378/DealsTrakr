@@ -20,19 +20,21 @@ const Navbar = () => {
       return (
         <div className="d-flex justify-content-between ">
           <div className="nav-email">{email}</div>
-          <button
+          <span
             className="navbar-nav nav-item"
             onClick={() => dispatch(signout())}
           >
             sign out
-          </button>
+          </span>
         </div>
       );
     } else {
       return (
-        <Link className="navbar-nav nav-item" href="/">
-          <span>Sign in</span>
-        </Link>
+        <div>
+          <Link className="navbar-nav nav-item" href="/">
+            <span>Sign in</span>
+          </Link>
+        </div>
       );
     }
   };

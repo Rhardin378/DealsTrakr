@@ -25,9 +25,13 @@ const DealColumn = ({ id, name, deals, updateDealIfValidId, isLastColumn }) => {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    <Link href={`/deals/${deal._id}`}>
-                      <h2 className="deal-name">{deal.name}</h2>
-                    </Link>
+                    <div>
+                      <i class="fa-solid fa-pencil"></i>
+
+                      <Link href={`/deals/${deal._id}`}>
+                        <h2 className="deal-name">{deal.name}</h2>
+                      </Link>
+                    </div>
 
                     <span>Amount: ${deal.amount}</span>
 

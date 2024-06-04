@@ -17,6 +17,10 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main>{children}</main>
         </Provider>
+        <script
+          src="https://kit.fontawesome.com/5254b95ce0.js"
+          crossorigin="anonymous"
+        ></script>
       </body>
     </html>
   );

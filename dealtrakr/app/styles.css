@@ -268,6 +268,10 @@ table {
 .deal-name {
   font-size: 20px;
 }
+
+i {
+  float: right;
+}
 .header {
   border-bottom: 1px solid gray;
   padding-bottom: 10px;
