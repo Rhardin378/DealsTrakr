@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDealDetails } from "../store/slices/dealDetailsSlice";
+import {setTab} from "../store/slices/deals";
 import DeleteDealButton from "./DeleteDealButton";
 import EditDealButton from "./EditDealButton";
 import { useParams } from "next/navigation";
@@ -9,7 +10,8 @@ import Link from "next/link";
 import Button from "react-bootstrap/Button";
 import EditDealsForm from "./EditDealForm";
 
-const dealDetails = () => {
+
+const dealDetails = ({ setActiveTab }) => {
   const { id } = useParams();
   const { dealDetails, loading, error, companyName } = useSelector(
     (state) => state.dealDetails
@@ -37,6 +39,10 @@ const dealDetails = () => {
     return <div>No deal details found</div>;
   }
 
+  const handleDashboardClick = () => {
+    dispatch(setTab("deals"))
+  }
+
   return (
     <div className="deal-details">
       <br />
@@ -62,7 +68,7 @@ const dealDetails = () => {
       <DeleteDealButton dealId={dealDetails._id} />
       <br />
       <Link href="/dashboard">
-        <Button className="back-button">Back to Dashboard</Button>
+        <Button className="back-button" onClick={handleDashboardClick}>Back to Dashboard</Button>
       </Link>
       <br />
       <br />

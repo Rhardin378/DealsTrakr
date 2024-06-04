@@ -2,21 +2,30 @@
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { useState } from "react";
-import { companiesAPI } from "../data/companiesAPI";
-import AddCompanyButton from "../components/AddCompanyButton";
 import CompaniesListView from "../components/CompaniesListView";
-import Link from "next/link";
 import DealsListView from "../components/DealsListView";
 import DashboardView from "../components/DashboardView";
+import { dealsSlice } from "../store/slices/deals";
+import AddDealsForm from "../components/AddDealsForm";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Dashboard() {
+  const currentTab = useSelector((state) => state.deals.currentTab);
+  
+  const [activeKey, setActiveKey] = useState( currentTab || "companies");
+
+
+
+  const handleSelect = (key) => {
+    setActiveKey(key);
+  };
+
   return (
     <main>
-      <Tabs defaultActiveKey="companies" id="tab-example" className=" ms-3">
+      <Tabs activeKey={activeKey} onSelect={handleSelect} id="tab-example" className="ms-3">
         <Tab eventKey="companies" title="Companies" className="tabsClass">
           <CompaniesListView />
         </Tab>
-
         <Tab eventKey="deals" title="Deals" className="tabsClass">
           <DealsListView />
         </Tab>
@@ -24,6 +33,7 @@ export default function Dashboard() {
           <DashboardView />
         </Tab>
       </Tabs>
+      {/* <AddDealsForm setActiveTab={setActiveKey} /> */}
     </main>
   );
 }

@@ -24,6 +24,7 @@ const DashboardView = () => {
   const [dealsByDate, setDealsByDate] = useState([]);
   const [totalEarnings, setTotalEarnings] = useState(null);
   const [revenueByMonth, setRevenueByMonth] = useState({});
+  const [deals, setDeals] = useState([]); // Add deals state
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -38,6 +39,7 @@ const DashboardView = () => {
         setAverageDealsByDate(data.averageDealsByDate);
         setTotalEarnings(data.totalEarnings);
         setDealsByDate(Object.values(data.dealsByDate));
+        setDeals(data.deals); // Update deals state
 
         const revenueByMonth = data.deals.reduce((acc, deal) => {
           const date = new Date(deal.dateClosed);
@@ -63,7 +65,7 @@ const DashboardView = () => {
     };
 
     fetchDealData();
-  }, []);
+  }, [deals]); // Add deals to dependency array
 
   if (loading) {
     return <p>Loading...</p>;
@@ -84,11 +86,10 @@ const DashboardView = () => {
         data: Object.values(revenueByMonth),
         backgroundColor: 'rgba(75, 192, 192, 0.4)',
         borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: .8,
+        borderWidth: 0.8,
       },
     ],
   };
-  
 
   const barOptions = {
     plugins: {
@@ -103,73 +104,73 @@ const DashboardView = () => {
       },
     },
   };
-  
+
   const highestRevenueMonth = Object.entries(revenueByMonth)
-  .reduce((prev, [month, revenue]) => {
-    return prev[1] > revenue ? prev : [month, revenue];
-  }, ['', 0]);
+    .reduce((prev, [month, revenue]) => {
+      return prev[1] > revenue ? prev : [month, revenue];
+    }, ['', 0]);
 
   const formattedRevenue = highestRevenueMonth[1].toLocaleString(undefined, {
     minimumFractionDigits: 2,
   });
 
   return (
-  <div className="dashboard-container">
-    <div className="chart-container">
-      <div className="dashboard-card">
-        <h5>Total Revenue</h5>
-        <p>${totalEarnings}</p>
-      </div>
-      <div className="dashboard-card">
-        <h5>Average Time to Close</h5>
-        <p>{averageTimeToClose} days</p>
-      </div>
-      <div className="dashboard-card">
-        <h5>Win Percentage</h5>
-        <div className="pie-chart-container">
-          <div className="chart-with-legend">
-            <PieChart
-              className="pie-chart"
-              data={[
-                { title: 'Closed Won', value: closedWonPercentageAsNumber, color: '#E38627' },
-                { title: 'Closed Lost', value: closedLostPercentageAsNumber, color: '#C13C37' }
-              ]}
-              radius={50}
-              viewBoxSize={[100, 100]}
-            />
-            <div className="legend">
-              <div className="legend-item">
-                <span className="legend-color" style={{ backgroundColor: '#E38627' }}></span>
-                Closed Won: {closedWonPercentageAsNumber}%
-              </div>
-              <div className="legend-item">
-                <span className="legend-color" style={{ backgroundColor: '#C13C37' }}></span>
-                Closed Lost: {closedLostPercentageAsNumber}%
+    <div className="dashboard-container">
+      <div className="chart-container">
+        <div className="dashboard-card">
+          <h5>Total Revenue</h5>
+          <p>${totalEarnings}</p>
+        </div>
+        <div className="dashboard-card">
+          <h5>Average Time to Close</h5>
+          <p>{averageTimeToClose} days</p>
+        </div>
+        <div className="dashboard-card">
+          <h5>Win Percentage</h5>
+          <div className="pie-chart-container">
+            <div className="chart-with-legend">
+              <PieChart
+                className="pie-chart"
+                data={[
+                  { title: 'Closed Won', value: closedWonPercentageAsNumber, color: '#E38627' },
+                  { title: 'Closed Lost', value: closedLostPercentageAsNumber, color: '#C13C37' }
+                ]}
+                radius={50}
+                viewBoxSize={[100, 100]}
+              />
+              <div className="legend">
+                <div className="legend-item">
+                  <span className="legend-color" style={{ backgroundColor: '#E38627' }}></span>
+                  Closed Won: {closedWonPercentageAsNumber}%
+                </div>
+                <div className="legend-item">
+                  <span className="legend-color" style={{ backgroundColor: '#C13C37' }}></span>
+                  Closed Lost: {closedLostPercentageAsNumber}%
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="dashboard-card">
-        <div className="bar-graph-container">
-          <h5>Revenue by Month</h5>
-          <div className="bar-chart-container">
-            <Bar data={barData} options={barOptions} />
+        <div className="dashboard-card">
+          <div className="bar-graph-container">
+            <h5>Revenue by Month</h5>
+            <div className="bar-chart-container">
+              <Bar data={barData} options={barOptions} />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="dashboard-card">
-        <h5>Highest Total Month by Revenue</h5>
-        <p>{highestRevenueMonth[0]}: ${formattedRevenue}</p>
-      </div>
-      <div className="dashboard-card">
-        <h5>Average Deal Amount</h5>
-        <p>${averageDealAmount}</p>
+        <div className="dashboard-card">
+          <h5>Highest Total Month by Revenue</h5>
+          <p>{highestRevenueMonth[0]}: ${formattedRevenue}</p>
+        </div>
+        <div className="dashboard-card">
+          <h5>Average Deal Amount</h5>
+          <p>${averageDealAmount}</p>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default DashboardView;
