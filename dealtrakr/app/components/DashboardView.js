@@ -117,7 +117,15 @@ const DashboardView = () => {
   return (
     <div className="dashboard-container">
       <div className="chart-container">
-      <div className="dashboard-card">
+        <div className="dashboard-card">
+          <h5>Total Revenue</h5>
+          <p>${totalEarnings}</p>
+        </div>
+        <div className="dashboard-card">
+          <h5>Average Time to Close</h5>
+          <p>{averageTimeToClose} days</p>
+        </div>
+        <div className="dashboard-card">
           <h5>Win Percentage</h5>
           <div className="pie-chart-container">
             <div className="chart-with-legend">
@@ -143,19 +151,7 @@ const DashboardView = () => {
             </div>
           </div>
         </div>
-        <div className="dashboard-card">
-          <h5>Average Time to Close</h5>
-          <p>{averageTimeToClose} days</p>
-        </div>
-        
-        <div className="dashboard-card">
-          <h5>Highest Month of Earnings</h5>
-          <p>{highestRevenueMonth[0]}: ${formattedRevenue}</p>
-        </div>
-        <div className="dashboard-card">
-          <h5>Average Deal Amount</h5>
-          <p>${averageDealAmount}</p>
-        </div>
+
         <div className="dashboard-card">
           <div className="bar-graph-container">
             <h5>Revenue by Month</h5>
@@ -165,8 +161,12 @@ const DashboardView = () => {
           </div>
         </div>
         <div className="dashboard-card">
-          <h5>Total Revenue</h5>
-          <p>${totalEarnings}</p>
+          <h5>Highest Total Month by Revenue</h5>
+          <p>{highestRevenueMonth[0]}: ${formattedRevenue}</p>
+        </div>
+        <div className="dashboard-card">
+          <h5>Average Deal Amount</h5>
+          <p>${averageDealAmount}</p>
         </div>
       </div>
     </div>
