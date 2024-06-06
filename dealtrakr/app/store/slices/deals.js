@@ -7,7 +7,10 @@ import axios from "axios";
 export const fetchDeals = createAsyncThunk("deals/fetchDeals", async () => {
   try {
     // Makes a GET request to the server
-    const response = await axios.get(`http://localhost:8000/deals`, {});
+    const response = await axios.get(
+      `https://dealstrakr.onrender.com/deals`,
+      {}
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -21,7 +24,7 @@ export const editDeal = createAsyncThunk(
       console.log(dealId);
       console.log(dealData);
       const response = await axios.put(
-        `http://localhost:8000/deals/${dealId}`,
+        `https://dealstrakr.onrender.com/deals/${dealId}`,
         dealData
       );
       return response.data;
@@ -45,7 +48,7 @@ export const dealsSlice = createSlice({
   },
   reducers: {
     setTab: (state, action) => {
-      state.currentTab = action.payload
+      state.currentTab = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -58,13 +61,11 @@ export const dealsSlice = createSlice({
         state.dealsToShow = action.payload.deals;
         state.averageDealAmount = action.payload.averageDealAmount;
         state.averageTimeToClose = action.payload.averageTimeToClose;
-        state.closedWonPercentage = action.payload.closedWonPercentage
-        state.closedLostPercentage = action.payload.closedLostPercentage
-        state.averageDealsByDate = action.payload.averageDealsByDate
-        state.totalEarnings = action.payload.totalEarnings
-        state.dealsByDate = action.payload.dealsByDate
-
-
+        state.closedWonPercentage = action.payload.closedWonPercentage;
+        state.closedLostPercentage = action.payload.closedLostPercentage;
+        state.averageDealsByDate = action.payload.averageDealsByDate;
+        state.totalEarnings = action.payload.totalEarnings;
+        state.dealsByDate = action.payload.dealsByDate;
       })
       .addCase(fetchDeals.rejected, (state, action) => {
         state.status = "failed";
@@ -83,5 +84,5 @@ export const dealsSlice = createSlice({
   },
 });
 
-export const { setTab } = dealsSlice.actions
+export const { setTab } = dealsSlice.actions;
 export default dealsSlice.reducer;

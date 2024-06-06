@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { fetchDashboardDealData } from '../components/FetchDashboardDealData';
-import { PieChart } from 'react-minimal-pie-chart';
+import React, { useEffect, useState } from "react";
+import { fetchDashboardDealData } from "../components/FetchDashboardDealData";
+import { PieChart } from "react-minimal-pie-chart";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,11 +9,18 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-import '../../app/styles.css';
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import "../../app/styles.css";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const DashboardView = () => {
   const [averageDealAmount, setAverageDealAmount] = useState(null);
@@ -43,7 +50,10 @@ const DashboardView = () => {
 
         const revenueByMonth = data.deals.reduce((acc, deal) => {
           const date = new Date(deal.dateClosed);
-          const monthYear = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+          const monthYear = date.toLocaleString("default", {
+            month: "long",
+            year: "numeric",
+          });
           acc[monthYear] = (acc[monthYear] || 0) + parseFloat(deal.amount);
           return acc;
         }, {});
@@ -58,7 +68,7 @@ const DashboardView = () => {
 
         setRevenueByMonth(sortedRevenueByMonth);
       } catch (error) {
-        setError('Error fetching the average deal amount.');
+        setError("Error fetching the average deal amount.");
       } finally {
         setLoading(false);
       }
@@ -82,10 +92,10 @@ const DashboardView = () => {
     labels: Object.keys(revenueByMonth),
     datasets: [
       {
-        label: 'Revenue',
+        label: "Revenue",
         data: Object.values(revenueByMonth),
-        backgroundColor: 'rgba(75, 192, 192, 0.4)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: "rgba(75, 192, 192, 0.4)",
+        borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 0.8,
       },
     ],
@@ -94,8 +104,8 @@ const DashboardView = () => {
   const barOptions = {
     plugins: {
       legend: {
-        position: 'top',
-        align: 'end',
+        position: "top",
+        align: "end",
       },
     },
     scales: {
@@ -105,10 +115,12 @@ const DashboardView = () => {
     },
   };
 
-  const highestRevenueMonth = Object.entries(revenueByMonth)
-    .reduce((prev, [month, revenue]) => {
+  const highestRevenueMonth = Object.entries(revenueByMonth).reduce(
+    (prev, [month, revenue]) => {
       return prev[1] > revenue ? prev : [month, revenue];
-    }, ['', 0]);
+    },
+    ["", 0]
+  );
 
   const formattedRevenue = highestRevenueMonth[1].toLocaleString(undefined, {
     minimumFractionDigits: 2,
@@ -132,19 +144,33 @@ const DashboardView = () => {
               <PieChart
                 className="pie-chart"
                 data={[
-                  { title: 'Closed Won', value: closedWonPercentageAsNumber, color: '#E38627' },
-                  { title: 'Closed Lost', value: closedLostPercentageAsNumber, color: '#C13C37' }
+                  {
+                    title: "Closed Won",
+                    value: closedWonPercentageAsNumber,
+                    color: "#E38627",
+                  },
+                  {
+                    title: "Closed Lost",
+                    value: closedLostPercentageAsNumber,
+                    color: "#C13C37",
+                  },
                 ]}
                 radius={50}
                 viewBoxSize={[100, 100]}
               />
               <div className="legend">
                 <div className="legend-item">
-                  <span className="legend-color" style={{ backgroundColor: '#E38627' }}></span>
+                  <span
+                    className="legend-color"
+                    style={{ backgroundColor: "#E38627" }}
+                  ></span>
                   Closed Won: {closedWonPercentageAsNumber}%
                 </div>
                 <div className="legend-item">
-                  <span className="legend-color" style={{ backgroundColor: '#C13C37' }}></span>
+                  <span
+                    className="legend-color"
+                    style={{ backgroundColor: "#C13C37" }}
+                  ></span>
                   Closed Lost: {closedLostPercentageAsNumber}%
                 </div>
               </div>
@@ -162,7 +188,9 @@ const DashboardView = () => {
         </div>
         <div className="dashboard-card">
           <h5>Highest Total Month by Revenue</h5>
-          <p>{highestRevenueMonth[0]}: ${formattedRevenue}</p>
+          <p>
+            {highestRevenueMonth[0]}: ${formattedRevenue}
+          </p>
         </div>
         <div className="dashboard-card">
           <h5>Average Deal Amount</h5>

@@ -9,7 +9,9 @@ export const fetchDealDetails = createAsyncThunk(
   "dealDetails/fetchDealDetails",
   async (id) => {
     try {
-      const response = await axios.get(`http://localhost:8000/deals/${id}`);
+      const response = await axios.get(
+        `https://dealstrakr.onrender.com/deals/${id}`
+      );
       return response.data;
     } catch (error) {
       throw error;

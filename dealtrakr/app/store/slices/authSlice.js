@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = `http://localhost:8000/`;
+const BASE_URL = `https://dealstrakr.onrender.com/`;
 const isServer = typeof window === "undefined";
 
 // Async action creators using createAsyncThunk

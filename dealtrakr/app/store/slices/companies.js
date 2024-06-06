@@ -6,7 +6,7 @@ export const fetchCompanies = createAsyncThunk(
   "companies/fetchCompanies",
   async () => {
     let response;
-    response = await axios.get("http://localhost:8000/companies");
+    response = await axios.get("https://dealstrakr.onrender.com/companies");
 
     return response.data;
   }
