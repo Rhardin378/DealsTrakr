@@ -1,14 +1,3 @@
-// // want my data to be deals fetch deals
-// // each category can be mapped to a droppable column
-// // each deal will be mapped as a droppable
-// // on dragEnd should handle re ordering and sending a post request based on the column
-
-// // initiated
-// //qualified
-// //contract sent
-// //closed won
-// //closed lost
-
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { fetchDeals, editDeal } from "../store/slices/deals";
@@ -25,14 +14,15 @@ const DealsKhanBan = () => {
   const error = useSelector((state) => state.deals.error);
   const dispatch = useDispatch();
 
-  // const formatDate = (dateString) => {
-  //   const options = { year: "numeric", month: "long", day: "numeric" };
-  //   return new Date(dateString).toLocaleDateString(undefined, options);
-  // };
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   if (error) {
     console.log(error);
   }
+
   const formatDealData = (
     initiated,
     qualified,
@@ -41,31 +31,11 @@ const DealsKhanBan = () => {
     closedLost
   ) => {
     let deals = [
-      {
-        id: "initiated",
-        name: "Initiated",
-        deals: initiated,
-      },
-      {
-        id: "qualified",
-        name: "qualified",
-        deals: qualified,
-      },
-      {
-        id: "contract_sent",
-        name: "Contract Sent",
-        deals: contractSent,
-      },
-      {
-        id: "closed_won",
-        name: "Closed Won",
-        deals: closedWon,
-      },
-      {
-        id: "closed_lost",
-        name: "Closed Lost",
-        deals: closedLost,
-      },
+      { id: "initiated", name: "Initiated", deals: initiated },
+      { id: "qualified", name: "Qualified", deals: qualified },
+      { id: "contract_sent", name: "Contract Sent", deals: contractSent },
+      { id: "closed_won", name: "Closed Won", deals: closedWon },
+      { id: "closed_lost", name: "Closed Lost", deals: closedLost },
     ];
     setDeals(deals);
   };
@@ -79,6 +49,7 @@ const DealsKhanBan = () => {
   useEffect(() => {
     if (status === "succeeded") {
       let initiated = dealData.filter((deal) => deal.stage == "initiated");
+
       console.log(initiated);
       let qualified = dealData.filter((deal) => deal.stage == "qualified");
       console.log(qualified);
@@ -108,7 +79,6 @@ const DealsKhanBan = () => {
 
   const handleDragAndDrop = (result) => {
     const { source, destination, draggableId } = result;
-    console.log(result);
 
     if (!destination) return;
 
@@ -126,7 +96,7 @@ const DealsKhanBan = () => {
 
     const sourceItems = Array.from(sourceStage.deals);
     const [movedItem] = sourceItems.splice(source.index, 1);
-    console.log(movedItem._id);
+
     if (source.droppableId === destination.droppableId) {
       sourceItems.splice(destination.index, 0, movedItem);
 
@@ -137,6 +107,7 @@ const DealsKhanBan = () => {
     } else {
       const destinationItems = Array.from(destinationStage.deals);
       destinationItems.splice(destination.index, 0, movedItem);
+
       const newDeals = deals.map((deal) =>
         deal.id === source.droppableId
           ? { ...deal, deals: sourceItems }
@@ -145,7 +116,6 @@ const DealsKhanBan = () => {
           : deal
       );
       setCategoryToUpdate(destination.droppableId);
-
       setDeals(newDeals);
       // put request still not working correctly
       let dealupdatedDeal = dealData.find((deal) => deal._id === draggableId);
@@ -163,9 +133,10 @@ const DealsKhanBan = () => {
       // });
     }
   };
+
   const updateDealIfValidId = (deal) => {
     if (deal._id !== updatedDeal._id) {
-      console.log("cant do that");
+      console.log("can't do that");
       return;
     } else {
       dispatch(
@@ -173,7 +144,7 @@ const DealsKhanBan = () => {
           dealId: deal._id,
           dealData: updatedDeal,
         })
-      ).then((deals) => dispatch(fetchDeals()));
+      ).then(() => dispatch(fetchDeals()));
       setUpdatedDeal({});
     }
   };
@@ -193,7 +164,6 @@ const DealsKhanBan = () => {
                   deals={deal.deals}
                   updateDealIfValidId={updateDealIfValidId}
                   isLastColumn={isLastColumn}
-                  // formatDate={formatDate}
                 />
               );
             })}
