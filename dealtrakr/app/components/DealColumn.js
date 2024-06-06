@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { Droppable, Draggable } from "react-beautiful-dnd";
 import Link from "next/link";
 
-const DealColumn = ({ id, name, deals, updateDealIfValidId, isLastColumn }) => {
+const DealColumn = ({ id, name, deals, updateDealIfValidId, isLastColumn, formatDate }) => {
   return (
     <Droppable droppableId={id} key={id}>
       {(provided) => (
@@ -34,10 +34,10 @@ const DealColumn = ({ id, name, deals, updateDealIfValidId, isLastColumn }) => {
                     <span>Amount: ${deal.amount}</span>
 
                     <div>
-                      <span>Close date: {deal.dateClosed}</span>
+                      <span>Close date: {formatDate(deal.dateClosed)}</span>
                     </div>
                     <div>
-                      <img src={deal.company.imageURL} />
+                      <img src={deal.company.imageURL} alt={`${deal.company.name} logo`} />
                     </div>
                     <div>
                       <button
