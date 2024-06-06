@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux";
-import { addCompany } from "../store/slices/addCompanySlice";
 import { fetchCompanies } from "../store/slices/companies";
 import { fetchCompanyDetails } from "../store/slices/companyDetailsSlice";
 import { useDispatch } from "react-redux";
@@ -37,7 +36,7 @@ const EditCompany = () => {
   const handleShow = () => setShow(true);
 
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
@@ -74,8 +73,7 @@ const EditCompany = () => {
       dispatch(fetchCompanies());
       handleClose();
     });
-
-};
+  };
 
   return (
     <>
@@ -95,7 +93,12 @@ const EditCompany = () => {
         </Modal.Header>
         <Modal.Body>
           <div className="add-company-form-container">
-          <div className="error-message" style={{ color: "red", marginBottom: "5px" }}>{errorMessage}</div>
+            <div
+              className="error-message"
+              style={{ color: "red", marginBottom: "5px" }}
+            >
+              {errorMessage}
+            </div>
             <form>
               <label className="form-label mb-2">Name:</label>
               <input
@@ -145,7 +148,10 @@ const EditCompany = () => {
                 onChange={(e) => setCountry(e.target.value)}
               />
 
-              <label>Date Created: <strong>{formatDate(companyDetails.dateCreated)}</strong></label>
+              <label>
+                Date Created:{" "}
+                <strong>{formatDate(companyDetails.dateCreated)}</strong>
+              </label>
               <input
                 className="form-control"
                 type="date"

@@ -22,7 +22,7 @@ const CompaniesListView = () => {
   const allCompanies = useSelector((state) => state.companies.companiesToShow);
 
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
@@ -59,9 +59,6 @@ const CompaniesListView = () => {
       <div className="formActions">
         <CompanySearch />
         <AddCompanyForm />
-        {/* <Link href="/companies/new">
-          <button className="addCompanyBtn">Add New Company</button>
-        </Link> */}
       </div>
       <table className="table table-light table-striped">
         <thead>

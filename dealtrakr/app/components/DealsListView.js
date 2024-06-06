@@ -5,9 +5,6 @@ import DealSearch from "./DealSearch";
 import { fetchDeals } from "../store/slices/deals";
 import AddDealForm from "../deals/new/page";
 import DealsKhanBan from "../components/DealsKhanBan";
-//searchbar
-// table
-//pagination component
 
 const DealsListView = () => {
   const dispatch = useDispatch();

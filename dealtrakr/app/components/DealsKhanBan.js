@@ -126,11 +126,6 @@ const DealsKhanBan = () => {
       const stage = { stage: destination.droppableId };
       console.log(draggableId, stage);
       console.log(updatedDeal);
-
-      // .then(() => {
-      // //   setDeals(newDeals);
-      //   // dispatch(fetchDeals());
-      // });
     }
   };
 

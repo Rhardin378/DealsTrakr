@@ -5,16 +5,12 @@ import { useState } from "react";
 import CompaniesListView from "../components/CompaniesListView";
 import DealsListView from "../components/DealsListView";
 import DashboardView from "../components/DashboardView";
-import { dealsSlice } from "../store/slices/deals";
-import AddDealsForm from "../components/AddDealsForm";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Dashboard() {
   const currentTab = useSelector((state) => state.deals.currentTab);
-  
-  const [activeKey, setActiveKey] = useState( currentTab || "companies");
 
-
+  const [activeKey, setActiveKey] = useState(currentTab || "companies");
 
   const handleSelect = (key) => {
     setActiveKey(key);
@@ -22,7 +18,12 @@ export default function Dashboard() {
 
   return (
     <main>
-      <Tabs activeKey={activeKey} onSelect={handleSelect} id="tab-example" className="ms-3">
+      <Tabs
+        activeKey={activeKey}
+        onSelect={handleSelect}
+        id="tab-example"
+        className="ms-3"
+      >
         <Tab eventKey="companies" title="Companies" className="tabsClass">
           <CompaniesListView />
         </Tab>
@@ -33,7 +34,6 @@ export default function Dashboard() {
           <DashboardView />
         </Tab>
       </Tabs>
-      {/* <AddDealsForm setActiveTab={setActiveKey} /> */}
     </main>
   );
 }

@@ -10,7 +10,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  
   const dispatch = useDispatch();
 
   const handleUsernameChange = (e) => {
@@ -23,12 +22,6 @@ const Login = () => {
 
   const handleSignIn = () => {
     const user = { email, password };
-    // if (username === "HBO_Admin" && password === "hbomax") {
-    //   // If username and password match, navigate to dashboard
-    //   router.push("/dashboard");
-    // } else {
-    //   setError("Invalid username or password");
-    // }
     dispatch(signin(user));
     router.push("/dashboard");
   };
