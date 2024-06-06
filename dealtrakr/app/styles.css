@@ -145,6 +145,7 @@ table {
 }
 .formActions {
   display: flex;
+  margin: auto;
   justify-content: space-between;
 }
 .add-company-button,
@@ -252,6 +253,8 @@ table {
   padding: 20px;
   padding-right: 0;
   border-radius: 5px;
+  margin: auto;
+  width: 79%;
   display: flex;
 }
 
