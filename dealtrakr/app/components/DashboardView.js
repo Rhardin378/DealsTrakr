@@ -65,7 +65,7 @@ const DashboardView = () => {
     };
 
     fetchDealData();
-  }, [deals]); // Add deals to dependency array
+  }, []);
 
   if (loading) {
     return <p>Loading...</p>;

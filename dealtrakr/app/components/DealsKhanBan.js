@@ -24,6 +24,12 @@ const DealsKhanBan = () => {
   const status = useSelector((state) => state.deals.status);
   const error = useSelector((state) => state.deals.error);
   const dispatch = useDispatch();
+
+  // const formatDate = (dateString) => {
+  //   const options = { year: "numeric", month: "long", day: "numeric" };
+  //   return new Date(dateString).toLocaleDateString(undefined, options);
+  // };
+
   if (error) {
     console.log(error);
   }
@@ -187,6 +193,7 @@ const DealsKhanBan = () => {
                   deals={deal.deals}
                   updateDealIfValidId={updateDealIfValidId}
                   isLastColumn={isLastColumn}
+                  // formatDate={formatDate}
                 />
               );
             })}
