@@ -3,7 +3,7 @@ import React from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Link from "next/link";
 
-const DealColumn = ({ id, name, deals, updateDealIfValidId, isLastColumn }) => {
+const DealColumn = ({ id, name, deals, updateDealIfValidId, isLastColumn, formatDate }) => {
   return (
     <Droppable droppableId={id} key={id}>
       {(provided) => (
@@ -32,10 +32,10 @@ const DealColumn = ({ id, name, deals, updateDealIfValidId, isLastColumn }) => {
                       </Link>
                     </div>
 
-                    <span>Amount: ${deal.amount}</span>
+                    <span>Amount: <strong>${deal.amount}</strong></span>
 
                     <div>
-                      <span>Close date: {deal.dateClosed}</span>
+                      <span>Close date: <strong>{formatDate(deal.dateClosed)}</strong></span>
                     </div>
                     <div>
                       <img src={deal.company.imageURL} />
@@ -54,7 +54,7 @@ const DealColumn = ({ id, name, deals, updateDealIfValidId, isLastColumn }) => {
             ))}
           </div>
 
-          {provided.placeholder}
+          <div className="custom-placeholder">{provided.placeholder}</div>
         </div>
       )}
     </Droppable>

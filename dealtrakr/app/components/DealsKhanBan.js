@@ -164,6 +164,7 @@ const DealsKhanBan = () => {
                   deals={deal.deals}
                   updateDealIfValidId={updateDealIfValidId}
                   isLastColumn={isLastColumn}
+                  formatDate={formatDate}
                 />
               );
             })}
