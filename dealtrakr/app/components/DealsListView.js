@@ -22,7 +22,7 @@ const DealsListView = () => {
 
   return (
     <div className=" dealsForm">
-      <div className="formActions-deals">
+      <div className=" formActions formActions-deals">
         <DealSearch />
         <AddDealForm />
       </div>
