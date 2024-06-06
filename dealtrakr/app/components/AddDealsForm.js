@@ -12,7 +12,7 @@ const AddDealsForm = ({ setActiveTab }) => {
   const [amount, setAmount] = useState("");
   const [dateClosed, setdateClosed] = useState("");
   const [dateInitiated, setDateInitiated] = useState("");
-  const [stage, setStage] = useState("Initiated");
+  const [stage, setStage] = useState("");
   const [selectedCompany, setSelectedCompany] = useState("");
   const dispatch = useDispatch();
   const companies = useSelector((state) => state.companies.companiesToShow); // Corrected selector for companies
@@ -58,7 +58,7 @@ const AddDealsForm = ({ setActiveTab }) => {
     setAmount("");
     setdateClosed("");
     setDateInitiated("");
-    setStage("Initiated");
+    setStage("");
     setSelectedCompany("");
   };
 
