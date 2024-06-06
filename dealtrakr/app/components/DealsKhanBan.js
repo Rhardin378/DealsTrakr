@@ -78,7 +78,7 @@ const DealsKhanBan = () => {
 
   useEffect(() => {
     if (status === "succeeded") {
-      let initiated = dealData.filter((deal) => deal.stage == "initiated" || "Initiated");
+      let initiated = dealData.filter((deal) => deal.stage == "initiated");
       console.log(initiated);
       let qualified = dealData.filter((deal) => deal.stage == "qualified");
       console.log(qualified);
