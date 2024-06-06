@@ -3,7 +3,6 @@ import companies from "../store/slices/companies";
 import { fetchCompanies } from "../store/slices/companies";
 import { useEffect, React } from "react";
 import { useState } from "react";
-import { companiesAPI } from "../data/companiesAPI";
 import Link from "next/link";
 import CompanySearch from "./CompanySearch";
 import AddCompanyForm from "../companies/new/page";
