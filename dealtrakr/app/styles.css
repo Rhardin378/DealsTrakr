@@ -146,6 +146,7 @@ table {
 .formActions {
   display: flex;
   margin: auto;
+  width: 79%;
   justify-content: space-between;
 }
 .add-company-button,
