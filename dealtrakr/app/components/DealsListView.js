@@ -20,46 +20,13 @@ const DealsListView = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  const allDeals = useSelector((state) => state.deals.dealsToShow);
-
-  const renderDeals = allDeals.map((deal) => {
-    return (
-      <tr scope="row" key={deal._id}>
-        <td scope="col">
-          <div>
-            <span>
-              <Link href={`/deals/${deal._id}`}>{deal.name}</Link>
-            </span>
-          </div>
-        </td>
-        <td scope="col">
-          <span>{deal.amount}</span>
-        </td>
-        <td scope="col">
-          <span>{formatDate(deal.dateClosed)}</span>
-        </td>
-      </tr>
-    );
-  });
-
   return (
     <div className=" dealsForm">
-      {/* container class was removed  */}
-      <div className="formActions">
+      <div className="formActions-deals">
         <DealSearch />
         <AddDealForm />
       </div>
-      {/* <table className="table table-light table-striped">
-        <thead>
-          <tr>
-            <th>Deal Name</th>
-            <th>Deal Amount</th>
-            <th>Close Date</th>
-          </tr>
-        </thead>
-        <tbody>{renderDeals}</tbody>
-      </table>  */}
-      <div className="">
+      <div>
         <DealsKhanBan />
       </div>
     </div>

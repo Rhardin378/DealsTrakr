@@ -146,9 +146,13 @@ table {
 .formActions {
   display: flex;
   margin: auto;
-  width: 79%;
+
   justify-content: space-between;
 }
+.formActions-deals {
+  width: 79%;
+}
+
 .add-company-button,
 .add-deal-button,
 .addCompanyBtn {
