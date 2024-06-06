@@ -58,6 +58,13 @@ export const dealsSlice = createSlice({
         state.dealsToShow = action.payload.deals;
         state.averageDealAmount = action.payload.averageDealAmount;
         state.averageTimeToClose = action.payload.averageTimeToClose;
+        state.closedWonPercentage = action.payload.closedWonPercentage
+        state.closedLostPercentage = action.payload.closedLostPercentage
+        state.averageDealsByDate = action.payload.averageDealsByDate
+        state.totalEarnings = action.payload.totalEarnings
+        state.dealsByDate = action.payload.dealsByDate
+
+
       })
       .addCase(fetchDeals.rejected, (state, action) => {
         state.status = "failed";

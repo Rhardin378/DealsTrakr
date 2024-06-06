@@ -25,10 +25,10 @@ const DealsKhanBan = () => {
   const error = useSelector((state) => state.deals.error);
   const dispatch = useDispatch();
 
-  // const formatDate = (dateString) => {
-  //   const options = { year: "numeric", month: "long", day: "numeric" };
-  //   return new Date(dateString).toLocaleDateString(undefined, options);
-  // };
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   if (error) {
     console.log(error);
@@ -48,7 +48,7 @@ const DealsKhanBan = () => {
       },
       {
         id: "qualified",
-        name: "qualified",
+        name: "Qualified",
         deals: qualified,
       },
       {
@@ -193,7 +193,7 @@ const DealsKhanBan = () => {
                   deals={deal.deals}
                   updateDealIfValidId={updateDealIfValidId}
                   isLastColumn={isLastColumn}
-                  // formatDate={formatDate}
+                  formatDate={formatDate}
                 />
               );
             })}
